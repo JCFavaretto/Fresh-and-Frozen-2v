@@ -1,4 +1,12 @@
 @import "scss/index.scss";
 
 
+.error:focus{
+    border-bottom: 2px solid $error !important;
+    
+}
 
+.success:focus{  
+    border-bottom: 2px solid $success !important;
+    
+}
