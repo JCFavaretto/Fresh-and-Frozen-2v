@@ -6,9 +6,15 @@ import "pages/Admin/SignIn/SignIn.scss";
 import RegisterForm from "components/RegisterForm";
 import LoginForm from "components/LoginForm";
 
+import { getAccessToken } from "API/auth";
+
 function SignIn() {
   const { Content } = Layout;
   const { TabPane } = Tabs;
+  if (getAccessToken()) {
+    return <Redirect to="/admin" />;
+  }
+
   return (
     <Layout className="sign-in">
       <Content className="sign-in__content">

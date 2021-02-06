@@ -6,8 +6,14 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import "components/Admin/MenuTop/MenuTop.scss";
+import { logout } from "API/auth";
 
 function MenuTop({ menuCollapsed, setMenuCollapsed }) {
+  function logoutUser() {
+    logout();
+    window.location.reload();
+  }
+
   return (
     <div className="menu-top">
       <div className="menu-top__left">
@@ -22,7 +28,7 @@ function MenuTop({ menuCollapsed, setMenuCollapsed }) {
         </Button>
       </div>
       <div className="menu-top__right">
-        <Button type="link">
+        <Button type="link" onClick={logoutUser}>
           <LogoutOutlined />
         </Button>
       </div>
