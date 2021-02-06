@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 
 import "pages/Admin/SignIn/SignIn.scss";
 import RegisterForm from "components/RegisterForm";
+import LoginForm from "components/LoginForm";
 
 function SignIn() {
   const { Content } = Layout;
@@ -15,7 +16,7 @@ function SignIn() {
         <div className="sign-in__content-tabs">
           <Tabs type="card">
             <TabPane tab={<span>Entrar</span>} key="1">
-              Component LoginForm
+              <LoginForm />
             </TabPane>
             <TabPane tab={<span>Registrarse</span>} key="2">
               <RegisterForm />

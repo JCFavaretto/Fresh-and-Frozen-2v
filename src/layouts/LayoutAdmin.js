@@ -6,14 +6,16 @@ import LoadRouters from "components/LoadRouters";
 import MenuTop from "components/Admin/MenuTop";
 import MenuSider from "components/Admin/MenuSider";
 import "layouts/LayoutAdmin.scss";
-
 import AdminSignIn from "pages/Admin/SignIn";
+
+import { getAccessToken } from "API/auth";
 
 function LayoutAdmin(props) {
   const { routes } = props;
   const [menuCollapsed, setMenuCollapsed] = useState(false);
   const { Header, Content, Footer } = Layout;
   const user = null;
+  getAccessToken();
 
   if (!user) {
     return (
