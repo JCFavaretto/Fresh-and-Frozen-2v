@@ -2,6 +2,9 @@
 
 .menu-top{
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
 
     button{
         background-color: transparent;
@@ -28,8 +31,9 @@
     }
 
     &__right{
-        position: absolute;
-        right: 10px;
+
+        padding: 0.5rem 2rem 0 0
     }
+
 
 } 

@@ -12,7 +12,7 @@ import useAuth from "hooks/useAuth";
 
 function LayoutAdmin(props) {
   const { routes } = props;
-  const [menuCollapsed, setMenuCollapsed] = useState(false);
+  const [menuCollapsed, setMenuCollapsed] = useState(true);
   const { Header, Content, Footer } = Layout;
 
   const { user, isLoading } = useAuth();
@@ -32,7 +32,7 @@ function LayoutAdmin(props) {
         <MenuSider menuCollapsed={menuCollapsed} />
         <Layout
           className="layout-admin"
-          style={{ marginLeft: menuCollapsed ? "80px" : "200px" }}
+          style={{ marginLeft: menuCollapsed ? "50px" : "200px" }}
         >
           <Header className="layout-admin__header">
             <MenuTop
@@ -41,7 +41,6 @@ function LayoutAdmin(props) {
             />
           </Header>
           <Content className="layout-admin__content">
-            <h2>Menu Sider Admin</h2>
             <LoadRouters routes={routes} />
           </Content>
           <Footer className="layout-admin__footer">Juan Cruz Favaretto</Footer>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
@@ -8,7 +9,7 @@ import { loginAPI } from "API/user";
 
 import "components/LoginForm/LoginForm.scss";
 
-function LoginForm() {
+function LoginForm({ location }) {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -19,6 +20,14 @@ function LoginForm() {
       ...inputs,
       [e.target.name]: e.target.value,
     });
+  }
+
+  function disabledLogin() {
+    if (inputs.email === "" || inputs.password === "") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   async function handleSubmit(e) {
@@ -42,7 +51,11 @@ function LoginForm() {
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
       toast.success("Login correcto");
 
-      window.location.href = "/admin";
+      if (location.pathname === "/admin/login") {
+        window.location.href = "/admin";
+      } else {
+        window.location.href = "/";
+      }
     }
   }
 
@@ -74,7 +87,11 @@ function LoginForm() {
       </Form.Item>
 
       <Form.Item>
-        <Button htmlType="submit" className="login-form__button">
+        <Button
+          htmlType="submit"
+          className="login-form__button"
+          disabled={disabledLogin()}
+        >
           Entrar
         </Button>
       </Form.Item>
@@ -82,4 +99,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

@@ -1,9 +1,25 @@
 @import "scss";
 
+.ant-layout-sider-collapsed{
+    flex: 0 0 50px !important;
+    max-width: 50px !important;
+    min-width: 50px !important;
+    width: 50px !important;
+}
+
+
 .admin-sider{
     position: fixed;
     left: 0;
     top: 65px;
     height: 100vh;
     overflow: auto;
+
+    .ant-menu-inline-collapsed{
+        padding-right: 25px; 
+
+    }
+
+
+
 }

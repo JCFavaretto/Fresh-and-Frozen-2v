@@ -17,8 +17,9 @@ function MenuTop({ menuCollapsed, setMenuCollapsed }) {
   return (
     <div className="menu-top">
       <div className="menu-top__left">
-        <h1 className="menu-top__left-logo">Juan Cruz Favaretto</h1>
+        <h1 className="menu-top__left-logo">Fresh&Frozen</h1>
         <Button
+          style={{ fontSize: "1.1rem" }}
           type="link"
           onClick={() => {
             setMenuCollapsed(!menuCollapsed);
@@ -28,7 +29,7 @@ function MenuTop({ menuCollapsed, setMenuCollapsed }) {
         </Button>
       </div>
       <div className="menu-top__right">
-        <Button type="link" onClick={logoutUser}>
+        <Button style={{ fontSize: "1.1rem" }} type="link" onClick={logoutUser}>
           <LogoutOutlined />
         </Button>
       </div>

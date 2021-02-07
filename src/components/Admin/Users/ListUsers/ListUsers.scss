@@ -1,0 +1,25 @@
+@import "scss";
+
+.list-users{
+    &__switch{
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+    
+        > button{
+            margin-right: 2rem;
+        }
+
+    }
+
+    .users-active{
+        background-color: $background-light;
+        padding: 1rem 2rem;
+
+        .ant-list-item-meta{
+            display: flex;
+            align-items: center;
+        }
+    }
+
+} 
