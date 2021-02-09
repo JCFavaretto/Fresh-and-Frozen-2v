@@ -10,6 +10,7 @@ import "pages/Admin/User/User.scss";
 function User() {
   const [usersActive, setUsersActive] = useState([]);
   const [usersInactive, setUsersInactive] = useState([]);
+  const [reloadUsers, setReloadUsers] = useState(false);
   const token = getAccessToken();
 
   useEffect(() => {
@@ -23,11 +24,16 @@ function User() {
         setUsersInactive(res.users);
       }
     });
-  }, []); //eslint-disable-line
+    setReloadUsers(false);
+  }, [token, reloadUsers]); //eslint-disable-line
 
   return (
     <div className="users">
-      <ListUsers usersActive={usersActive} usersInactive={usersInactive} />
+      <ListUsers
+        usersActive={usersActive}
+        usersInactive={usersInactive}
+        setReloadUsers={setReloadUsers}
+      />
     </div>
   );
 }

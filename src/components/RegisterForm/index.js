@@ -72,11 +72,13 @@ export default function RegisterForm() {
         const result = await signUpAPI(inputs);
         if (!result.ok) {
           if (
-            result.message ===
-            "User validation failed: email: Ese email ya existe."
+            result.err &&
+            result.err.message ===
+              "User validation failed: email: Ese email ya existe."
           ) {
             toast.error("Ese email ya esta registrado");
           } else {
+            console.log(result);
             toast.error("Error en la base de datos. Intente mas tarde.");
           }
         } else {

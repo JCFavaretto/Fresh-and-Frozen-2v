@@ -86,3 +86,66 @@ export function getUsersActiveApi(token, status) {
       return err;
     });
 }
+
+export function uploadAvatarApi(token, avatar, userId) {
+  const url = `${basepath}/upload/usuarios/${userId}`;
+
+  const formData = new FormData();
+  formData.append("archivo", avatar, avatar.name);
+
+  const params = {
+    method: "PUT",
+    body: formData,
+    headers: {
+      authorization: token,
+    },
+  };
+
+  return fetch(url, params)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function getAvatarApi(avatarName) {
+  const url = `${basepath}/imagen/usuarios/${avatarName}`;
+
+  return fetch(url)
+    .then((res) => {
+      return res.url;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function updateUserApi(token, user, userId) {
+  const url = `${basepath}/update-user/${userId}`;
+
+  const params = {
+    method: "PUT",
+    headers: {
+      authorization: token,
+
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  };
+
+  return fetch(url, params)
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
