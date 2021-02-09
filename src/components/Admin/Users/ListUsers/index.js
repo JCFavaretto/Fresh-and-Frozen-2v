@@ -5,6 +5,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   StopOutlined,
+  UserAddOutlined,
 } from "@ant-design/icons";
 
 import { getAvatarApi, changeUserStatus, deleteUser } from "API/user";
@@ -16,6 +17,7 @@ import EditUserForm from "components/Admin/EditUserForm";
 
 import "components/Admin/Users/ListUsers/ListUsers.scss";
 import { toast } from "react-toastify";
+import RegisterForm from "components/RegisterForm";
 
 const { confirm } = ModalAnt;
 
@@ -25,17 +27,30 @@ function ListUsers({ usersActive, usersInactive, setReloadUsers }) {
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState(null);
 
+  function addUserModal() {
+    setEdit(true);
+    setModalTitle("Crear nuevo usuario");
+    setModalContent(<RegisterForm setReloadUsers={setReloadUsers} />);
+  }
+
   return (
     <div className="list-users">
-      <div className="list-users__switch">
-        <Switch
-          defaultChecked
-          onChange={() => {
-            setActive((prev) => !prev);
-          }}
-        />
-        {active ? "Usuarios Activos" : "Usuarios Inactivos"}
+      <div className="list-users__header">
+        <div className="list-users__header-switch">
+          <Switch
+            defaultChecked
+            onChange={() => {
+              setActive((prev) => !prev);
+            }}
+          />
+          {active ? "Usuarios Activos" : "Usuarios Inactivos"}
+        </div>
+
+        <Button type="primary" onClick={addUserModal}>
+          <UserAddOutlined style={{ fontSize: "1.1rem" }} />
+        </Button>
       </div>
+
       {active ? (
         <UsersActive
           users={usersActive}

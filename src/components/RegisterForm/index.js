@@ -12,7 +12,7 @@ import { signUpAPI } from "API/user";
 
 import "components/RegisterForm/RegisterForm.scss";
 
-export default function RegisterForm() {
+export default function RegisterForm({ setReloadUsers = false }) {
   const [inputs, setInputs] = useState({
     name: "",
     lastName: "",
@@ -90,6 +90,9 @@ export default function RegisterForm() {
             password: "",
             repeatPassword: "",
           });
+          if (setReloadUsers) {
+            setReloadUsers(true);
+          }
         }
       }
     }
