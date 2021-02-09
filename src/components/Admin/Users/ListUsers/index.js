@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Switch, List, Avatar, Button } from "antd";
+import { Switch, List, Avatar, Button, Modal as ModalAnt } from "antd";
 import {
   CheckOutlined,
   DeleteOutlined,
@@ -7,7 +7,7 @@ import {
   StopOutlined,
 } from "@ant-design/icons";
 
-import { getAvatarApi, changeUserStatus } from "API/user";
+import { getAvatarApi, changeUserStatus, deleteUser } from "API/user";
 import { getAccessToken } from "API/auth";
 
 import noAvatar from "assets/img/no-avatar.png";
@@ -16,6 +16,8 @@ import EditUserForm from "components/Admin/EditUserForm";
 
 import "components/Admin/Users/ListUsers/ListUsers.scss";
 import { toast } from "react-toastify";
+
+const { confirm } = ModalAnt;
 
 function ListUsers({ usersActive, usersInactive, setReloadUsers }) {
   const [active, setActive] = useState(true);
@@ -113,6 +115,33 @@ function UserActive({ user, activeModal, setReloadUsers }) {
       });
   }
 
+  function removeUser(token, user) {
+    deleteUser(token, user._id)
+      .then((res) => {
+        if (!res.ok) {
+          toast.error(res.message);
+        } else {
+          toast.success(res.message);
+        }
+      })
+      .finally(() => {
+        setReloadUsers(true);
+      });
+  }
+
+  function showDeleteConfirm() {
+    const token = getAccessToken();
+
+    confirm({
+      title: "Eliminando usuario",
+      content: `¿Seguro de eliminar a ${user.email}?`,
+      okText: "Eliminar",
+      okType: "danger",
+      cancelText: "Cancelar",
+      onOk: () => removeUser(token, user),
+    });
+  }
+
   return (
     <List.Item
       actions={[
@@ -122,12 +151,7 @@ function UserActive({ user, activeModal, setReloadUsers }) {
         <Button type="danger" onClick={() => desactivateUser(user)}>
           <StopOutlined />
         </Button>,
-        <Button
-          type="danger"
-          onClick={() => {
-            console.log("Eliminar");
-          }}
-        >
+        <Button type="danger" onClick={showDeleteConfirm}>
           <DeleteOutlined />
         </Button>,
       ]}
@@ -182,18 +206,40 @@ function UserInactive({ user, setReloadUsers }) {
       });
   }
 
+  function removeUser(token, user) {
+    deleteUser(token, user._id)
+      .then((res) => {
+        if (!res.ok) {
+          toast.error(res.message);
+        } else {
+          toast.success(res.message);
+        }
+      })
+      .finally(() => {
+        setReloadUsers(true);
+      });
+  }
+
+  function showDeleteConfirm() {
+    const token = getAccessToken();
+
+    confirm({
+      title: "Eliminando usuario",
+      content: `¿Seguro de eliminar a ${user.email}?`,
+      okText: "Eliminar",
+      okType: "danger",
+      cancelText: "Cancelar",
+      onOk: () => removeUser(token, user),
+    });
+  }
+
   return (
     <List.Item
       actions={[
         <Button type="primary" onClick={() => activateUser(user)}>
           <CheckOutlined />
         </Button>,
-        <Button
-          type="danger"
-          onClick={() => {
-            console.log("Eliminar");
-          }}
-        >
+        <Button type="danger" onClick={showDeleteConfirm}>
           <DeleteOutlined />
         </Button>,
       ]}

@@ -172,3 +172,24 @@ export function changeUserStatus(token, active, userId) {
       return err;
     });
 }
+
+export function deleteUser(token, userId) {
+  const url = `${basepath}/delete-user/${userId}`;
+  const params = {
+    method: "DELETE",
+    headers: {
+      authorization: token,
+    },
+  };
+
+  return fetch(url, params)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}

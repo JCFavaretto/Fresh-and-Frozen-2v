@@ -43,27 +43,33 @@ function EditUserForm({ user, setEdit, setReloadUsers }) {
           toast.error(res.message);
         } else {
           updateUser.avatar = res.img;
-          updateUserApi(token, updateUser, user._id).then((res) => {
-            if (!res.ok) {
-              toast.error(res.message);
-            } else {
-              toast.success("Usuario Actualizado Correctamente");
+          updateUserApi(token, updateUser, user._id)
+            .then((res) => {
+              if (!res.ok) {
+                toast.error(res.message);
+              } else {
+                toast.success("Usuario Actualizado Correctamente");
+              }
+            })
+            .finally(() => {
               setEdit(false);
               setReloadUsers(true);
-            }
-          });
+            });
         }
       });
     } else {
-      updateUserApi(token, updateUser, user._id).then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          toast.success("Usuario Actualizado Correctamente");
+      updateUserApi(token, updateUser, user._id)
+        .then((res) => {
+          if (!res.ok) {
+            toast.error(res.message);
+          } else {
+            toast.success("Usuario Actualizado Correctamente");
+          }
+        })
+        .finally(() => {
           setEdit(false);
           setReloadUsers(true);
-        }
-      });
+        });
     }
   }
 

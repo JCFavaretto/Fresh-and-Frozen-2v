@@ -26,7 +26,8 @@ function User() {
     });
 
     setReloadUsers(false);
-  }, [token, reloadUsers]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reloadUsers]);
 
   return (
     <div className="users">
