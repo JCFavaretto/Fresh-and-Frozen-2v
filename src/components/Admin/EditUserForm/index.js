@@ -30,7 +30,7 @@ function EditUserForm({ user, setEdit, setReloadUsers }) {
         toast.error("Las contraseñas no coinciden");
         return;
       } else {
-        delete updateUser.password;
+        delete updateUser.repeatPassword;
       }
     }
     if (!updateUser.name || !updateUser.lastName || !updateUser.email) {

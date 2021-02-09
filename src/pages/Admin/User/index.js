@@ -24,8 +24,9 @@ function User() {
         setUsersInactive(res.users);
       }
     });
+
     setReloadUsers(false);
-  }, [token, reloadUsers]); //eslint-disable-line
+  }, [token, reloadUsers]);
 
   return (
     <div className="users">

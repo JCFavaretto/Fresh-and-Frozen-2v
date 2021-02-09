@@ -7,13 +7,15 @@ import {
   StopOutlined,
 } from "@ant-design/icons";
 
-import { getAvatarApi } from "API/user";
+import { getAvatarApi, changeUserStatus } from "API/user";
+import { getAccessToken } from "API/auth";
 
 import noAvatar from "assets/img/no-avatar.png";
 import Modal from "components/Modal";
 import EditUserForm from "components/Admin/EditUserForm";
 
 import "components/Admin/Users/ListUsers/ListUsers.scss";
+import { toast } from "react-toastify";
 
 function ListUsers({ usersActive, usersInactive, setReloadUsers }) {
   const [active, setActive] = useState(true);
@@ -41,7 +43,7 @@ function ListUsers({ usersActive, usersInactive, setReloadUsers }) {
           setReloadUsers={setReloadUsers}
         />
       ) : (
-        <UsersInactive users={usersInactive} />
+        <UsersInactive users={usersInactive} setReloadUsers={setReloadUsers} />
       )}
       <Modal title={modalTitle} isVisible={edit} setIsVisible={setEdit}>
         {modalContent}
@@ -75,13 +77,17 @@ function UsersActive({
       itemLayout="horizontal"
       dataSource={users}
       renderItem={(user) => (
-        <UserActive user={user} activeModal={activeModal} />
+        <UserActive
+          user={user}
+          activeModal={activeModal}
+          setReloadUsers={setReloadUsers}
+        />
       )}
     />
   );
 }
 
-function UserActive({ user, activeModal }) {
+function UserActive({ user, activeModal, setReloadUsers }) {
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
@@ -89,10 +95,23 @@ function UserActive({ user, activeModal }) {
       getAvatarApi(user.avatar).then((res) => {
         setAvatar(res);
       });
-    } else {
-      setAvatar(null);
     }
   }, [user]);
+
+  function desactivateUser(user) {
+    const token = getAccessToken();
+    changeUserStatus(token, false, user._id)
+      .then((res) => {
+        if (!res.ok) {
+          toast.error(res.message);
+        } else {
+          toast.success("Usuario desactivado");
+        }
+      })
+      .finally(() => {
+        setReloadUsers(true);
+      });
+  }
 
   return (
     <List.Item
@@ -100,7 +119,7 @@ function UserActive({ user, activeModal }) {
         <Button type="primary" onClick={() => activeModal(user)}>
           <EditOutlined />
         </Button>,
-        <Button type="danger" onClick={() => console.log("Desactiver Usuario")}>
+        <Button type="danger" onClick={() => desactivateUser(user)}>
           <StopOutlined />
         </Button>,
         <Button
@@ -122,18 +141,20 @@ function UserActive({ user, activeModal }) {
   );
 }
 
-function UsersInactive({ users }) {
+function UsersInactive({ users, setReloadUsers }) {
   return (
     <List
       className="users-active"
       itemLayout="horizontal"
       dataSource={users}
-      renderItem={(user) => <UserInactive user={user} />}
+      renderItem={(user) => (
+        <UserInactive user={user} setReloadUsers={setReloadUsers} />
+      )}
     />
   );
 }
 
-function UserInactive({ user }) {
+function UserInactive({ user, setReloadUsers }) {
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
@@ -146,10 +167,25 @@ function UserInactive({ user }) {
     }
   }, [user]);
 
+  function activateUser(user) {
+    const token = getAccessToken();
+    changeUserStatus(token, true, user._id)
+      .then((res) => {
+        if (!res.ok) {
+          toast.error(res.message);
+        } else {
+          toast.success("Usuario activado");
+        }
+      })
+      .finally(() => {
+        setReloadUsers(true);
+      });
+  }
+
   return (
     <List.Item
       actions={[
-        <Button type="primary" onClick={() => console.log("activar Usuario")}>
+        <Button type="primary" onClick={() => activateUser(user)}>
           <CheckOutlined />
         </Button>,
         <Button

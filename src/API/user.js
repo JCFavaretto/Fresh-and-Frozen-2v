@@ -149,3 +149,26 @@ export function updateUserApi(token, user, userId) {
       return err;
     });
 }
+
+export function changeUserStatus(token, active, userId) {
+  const url = `${basepath}/change-status-user/${userId}`;
+  const params = {
+    method: "PUT",
+    headers: {
+      authorization: token,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ active }),
+  };
+
+  return fetch(url, params)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
