@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import { getAccessToken } from "API/auth";
 import { getUsersActiveApi } from "API/user";
 
-import ListUsers from "components/Admin/Users/ListUsers";
+import ListUsers from "components/Admin/ListUsers";
 
 import "pages/Admin/User/User.scss";
 
@@ -17,11 +18,15 @@ function User() {
     getUsersActiveApi(token, true).then((res) => {
       if (res.ok) {
         setUsersActive(res.users);
+      } else {
+        toast.error(res.message);
       }
     });
     getUsersActiveApi(token, false).then((res) => {
       if (res.ok) {
         setUsersInactive(res.users);
+      } else {
+        toast.error(res.message);
       }
     });
 

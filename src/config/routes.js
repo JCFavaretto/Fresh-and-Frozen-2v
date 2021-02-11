@@ -7,6 +7,7 @@ import AdminHome from "pages/Admin";
 import AdminSignIn from "pages/Admin/SignIn";
 import User from "pages/Admin/User";
 import AdminError404 from "pages/Admin/Error404";
+import Products from "pages/Admin/Products";
 
 //Pages
 import Contact from "pages/Contact";
@@ -32,6 +33,11 @@ const routes = [
       {
         path: "/admin/users",
         component: User,
+        exact: true,
+      },
+      {
+        path: "/admin/productos",
+        component: Products,
         exact: true,
       },
       {

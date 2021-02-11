@@ -57,42 +57,33 @@ export default function RegisterForm({ setReloadUsers = false }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !inputs.name ||
-      !inputs.lastName ||
-      !inputs.email ||
-      !inputs.password ||
-      !inputs.repeatPassword
-    ) {
-      toast.error("Todos los campos son obligatorios");
+
+    if (inputs.password !== inputs.repeatPassword) {
+      toast.error("Las contraseñas no coinciden");
     } else {
-      if (inputs.password !== inputs.repeatPassword) {
-        toast.error("Las contraseñas no coinciden");
-      } else {
-        const result = await signUpAPI(inputs);
-        if (!result.ok) {
-          if (
-            result.err &&
-            result.err.message ===
-              "User validation failed: email: Ese email ya existe."
-          ) {
-            toast.error("Ese email ya esta registrado");
-          } else {
-            console.log(result);
-            toast.error("Error en la base de datos. Intente mas tarde.");
-          }
+      const result = await signUpAPI(inputs);
+      if (!result.ok) {
+        if (
+          result.err &&
+          result.err.message ===
+            "User validation failed: email: Ese email ya existe."
+        ) {
+          toast.error("Ese email ya esta registrado");
         } else {
-          toast.success("Registro completado");
-          setInputs({
-            name: "",
-            lastName: "",
-            email: "",
-            password: "",
-            repeatPassword: "",
-          });
-          if (setReloadUsers) {
-            setReloadUsers(true);
-          }
+          console.log(result);
+          toast.error(result.message);
+        }
+      } else {
+        toast.success("Registro completado");
+        setInputs({
+          name: "",
+          lastName: "",
+          email: "",
+          password: "",
+          repeatPassword: "",
+        });
+        if (setReloadUsers) {
+          setReloadUsers(true);
         }
       }
     }

@@ -15,7 +15,7 @@ import noAvatar from "assets/img/no-avatar.png";
 import Modal from "components/Modal";
 import EditUserForm from "components/Admin/EditUserForm";
 
-import "components/Admin/Users/ListUsers/ListUsers.scss";
+import "components/Admin/ListUsers/ListUsers.scss";
 import { toast } from "react-toastify";
 import RegisterForm from "components/RegisterForm";
 
