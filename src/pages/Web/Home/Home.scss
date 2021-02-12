@@ -1,0 +1,26 @@
+@import "scss";
+
+.home {
+  &__banner {
+    width: 100vw;
+    height: 300px;
+    margin: 1rem 0;
+    background-image: url("../../../assets/img/banner2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @media (min-width: 576px) {
+      width: 80vw;
+      margin: 1rem auto;
+    }
+
+    @media (min-width: 710px) {
+      background-image: url("../../../assets/img/banner.jpg");
+    }
+
+    @media (min-width: 992px) {
+      width: 66vw;
+    }
+  }
+}

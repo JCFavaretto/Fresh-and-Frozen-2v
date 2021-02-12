@@ -1,0 +1,59 @@
+@import "scss";
+
+.login-tabs {
+  margin-top: 1rem;
+  background-color: $background-light;
+
+  .ant-tabs {
+    width: 90vw;
+
+    @media (min-width: $media-breakpoint-up-lg) {
+      width: auto;
+    }
+  }
+
+  .ant-tabs-nav-container {
+    height: 6rem !important;
+  }
+
+  .ant-tabs-nav {
+    width: 100%;
+
+    .ant-tabs-nav-more {
+      display: none;
+    }
+  }
+
+  .ant-tabs-tab {
+    width: 50vw;
+    height: 60px !important;
+    text-align: center;
+    font-size: 1rem;
+    margin: 0 !important;
+    display: flex;
+    justify-content: center;
+    border-top: 4px solid $border-grey !important;
+
+    @media (min-width: $media-breakpoint-up-lg) {
+      width: 35vw;
+    }
+
+    &:before {
+      content: none;
+    }
+  }
+
+  .ant-tabs-tab-active {
+    color: $primary-color !important;
+    border-top: 4px solid $background-primary !important;
+  }
+
+  .ant-tabs-content {
+    padding: 0 2rem 2rem 2rem;
+    text-align: center;
+  }
+
+  button {
+    background-image: $background-gradient !important;
+  }
+}

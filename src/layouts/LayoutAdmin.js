@@ -27,26 +27,37 @@ function LayoutAdmin(props) {
   }
 
   if (user && !isLoading) {
-    return (
-      <Layout>
-        <MenuSider menuCollapsed={menuCollapsed} />
-        <Layout
-          className="layout-admin"
-          style={{ marginLeft: menuCollapsed ? "50px" : "200px" }}
-        >
-          <Header className="layout-admin__header">
-            <MenuTop
-              menuCollapsed={menuCollapsed}
-              setMenuCollapsed={setMenuCollapsed}
-            />
-          </Header>
-          <Content className="layout-admin__content">
-            <LoadRouters routes={routes} />
-          </Content>
-          <Footer className="layout-admin__footer">Juan Cruz Favaretto</Footer>
+    if (user.role === "ADMIN_ROLE") {
+      return (
+        <Layout>
+          <MenuSider menuCollapsed={menuCollapsed} />
+          <Layout
+            className="layout-admin"
+            style={{ marginLeft: menuCollapsed ? "50px" : "200px" }}
+          >
+            <Header className="layout-admin__header">
+              <MenuTop
+                menuCollapsed={menuCollapsed}
+                setMenuCollapsed={setMenuCollapsed}
+              />
+            </Header>
+            <Content className="layout-admin__content">
+              <LoadRouters routes={routes} />
+            </Content>
+            <Footer className="layout-admin__footer">
+              Juan Cruz Favaretto
+            </Footer>
+          </Layout>
         </Layout>
-      </Layout>
-    );
+      );
+    } else {
+      return (
+        <>
+          {" "}
+          <Redirect to="/" />
+        </>
+      );
+    }
   } else {
     return null;
   }

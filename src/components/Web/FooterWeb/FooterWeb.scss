@@ -1,0 +1,31 @@
+@import "scss";
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $background-dark-light !important;
+  text-align: center;
+  color: $font-light;
+  padding: 0;
+  margin: 2rem 0 0 0;
+  height: 16vh;
+
+  &__sociales {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  &__iconos {
+    display: flex;
+    width: 10rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__copy {
+    font-size: 0.6rem;
+    margin-top: 1rem;
+  }
+}

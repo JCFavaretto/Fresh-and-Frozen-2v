@@ -10,8 +10,9 @@ import AdminError404 from "pages/Admin/Error404";
 import Products from "pages/Admin/Products";
 
 //Pages
-import Contact from "pages/Contact";
-import Home from "pages/Home";
+import Home from "pages/Web/Home";
+import Nosotros from "pages/Web/Nosotros";
+import Login from "pages/Web/Login";
 import Error404 from "pages/Error404";
 
 const routes = [
@@ -56,8 +57,13 @@ const routes = [
         exact: true,
       },
       {
-        path: "/contact",
-        component: Contact,
+        path: "/nosotros",
+        component: Nosotros,
+        exact: true,
+      },
+      {
+        path: "/login",
+        component: Login,
         exact: true,
       },
       {
