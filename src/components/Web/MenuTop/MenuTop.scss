@@ -4,6 +4,9 @@
   background-image: $background-gradient;
   min-height: 12vh;
   padding-top: 1rem;
+  -webkit-box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.75);
 
   .menu-top-web {
     padding-bottom: 1rem;
@@ -115,6 +118,8 @@
     color: $font-light !important;
     width: 100vw;
 
+    font-size: 1rem;
+
     .ant-menu-item-selected {
       background-color: transparent !important;
       border: 0;
@@ -124,6 +129,8 @@
       .ant-menu-submenu-title {
         color: #fff !important;
         font-weight: bold;
+
+        font-size: 1rem;
 
         &:hover,
         &:active,
@@ -158,6 +165,8 @@
           p {
             color: #fff !important;
             font-weight: bold;
+
+            font-size: 1rem;
 
             &:hover {
               color: $primary-color !important;

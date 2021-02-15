@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { Tabs } from "antd";
+import { Tabs, Col, Row } from "antd";
 
 import { getAccessToken } from "API/auth";
 
@@ -17,14 +17,20 @@ function Login() {
   }
 
   return (
-    <Tabs type="card" className="login-tabs">
-      <TabPane tab={<span>Entrar</span>} key="1">
-        <LoginForm />
-      </TabPane>
-      <TabPane tab={<span>Registrarse</span>} key="2">
-        <RegisterForm />
-      </TabPane>
-    </Tabs>
+    <Row style={{ minHeight: "82vh" }}>
+      <Col xs={1} sm={2} lg={4}></Col>
+      <Col xs={22} sm={20} lg={16}>
+        <Tabs type="card" className="login-tabs">
+          <TabPane tab={<span>Entrar</span>} key="1">
+            <LoginForm />
+          </TabPane>
+          <TabPane tab={<span>Registrarse</span>} key="2">
+            <RegisterForm />
+          </TabPane>
+        </Tabs>
+      </Col>
+      <Col xs={1} sm={2} lg={4}></Col>
+    </Row>
   );
 }
 

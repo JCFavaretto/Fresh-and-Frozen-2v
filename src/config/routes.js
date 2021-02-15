@@ -7,13 +7,14 @@ import AdminHome from "pages/Admin";
 import AdminSignIn from "pages/Admin/SignIn";
 import User from "pages/Admin/User";
 import AdminError404 from "pages/Admin/Error404";
-import Products from "pages/Admin/Products";
+import AdminProducts from "pages/Admin/Products";
 
 //Pages
 import Home from "pages/Web/Home";
 import Nosotros from "pages/Web/Nosotros";
 import Login from "pages/Web/Login";
 import Error404 from "pages/Error404";
+import Products from "pages/Web/Products";
 
 const routes = [
   {
@@ -38,7 +39,7 @@ const routes = [
       },
       {
         path: "/admin/productos",
-        component: Products,
+        component: AdminProducts,
         exact: true,
       },
       {
@@ -64,6 +65,11 @@ const routes = [
       {
         path: "/login",
         component: Login,
+        exact: true,
+      },
+      {
+        path: "/productos",
+        component: Products,
         exact: true,
       },
       {

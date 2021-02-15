@@ -28,6 +28,11 @@ $background-gradient: linear-gradient(
   rgba(73, 138, 192, 1) 0%,
   rgba(252, 102, 104, 1) 100%
 );
+$background-gradient-inverse: linear-gradient(
+  155deg,
+  rgba(252, 102, 104, 1) 0%,
+  rgba(73, 138, 192, 1) 100%
+);
 $background-light: #fff;
 $background-grey-light: #e8e8e8;
 $background-grey: #808080;

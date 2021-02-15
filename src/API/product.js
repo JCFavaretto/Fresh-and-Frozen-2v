@@ -152,3 +152,25 @@ export function borrarProductoApi(token, productoId) {
       return err;
     });
 }
+
+export function getProductsApi() {
+  const url = `${basepath}/obtener-productos`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  return fetch(url, params)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      console.log(err.err);
+      return err;
+    });
+}

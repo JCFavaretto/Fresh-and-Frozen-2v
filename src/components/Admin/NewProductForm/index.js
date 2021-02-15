@@ -10,15 +10,16 @@ import { crearProductoApi, uploadImgProductApi } from "API/product";
 import "components/Admin/NewProductForm/NewProductForm.scss";
 
 function NewProductForm({ setModalVisible, setReloadProducts }) {
-  const [img, setImg] = useState(null);
-  const [productData, setProductData] = useState({
+  const initialState = {
     nombre: "",
     precio: "",
     stock: "",
     categoria: "",
     descripcion: "",
     oferta: false,
-  });
+  };
+  const [img, setImg] = useState(null);
+  const [productData, setProductData] = useState(initialState);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -52,6 +53,8 @@ function NewProductForm({ setModalVisible, setReloadProducts }) {
           return;
         } else {
           toast.success("Producto creado correctamente.");
+          setProductData(initialState);
+          setImg(null);
           setModalVisible(false);
           setReloadProducts(true);
         }

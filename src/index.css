@@ -5,9 +5,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   background-image: url('assets/img/fondo-web.jfif');
-  background-position: center; /* Center the image */
-  background-repeat: repeat-x; /* Do not repeat the image */
-
+  background-position: center; 
+  background-repeat: repeat; 
 }
 
 code {

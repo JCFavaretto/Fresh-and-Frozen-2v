@@ -1,5 +1,4 @@
 import React from "react";
-import { Col, Row } from "antd";
 import LoadRouters from "components/LoadRouters";
 
 import "layouts/LayoutBasic.scss";
@@ -10,13 +9,14 @@ function LayoutBasic({ routes }) {
   return (
     <>
       <MenuTop />
-      <Row style={{ minHeight: "72vh" }}>
-        <Col xs={0} sm={2} lg={4}></Col>
-        <Col xs={24} sm={20} lg={16}>
-          <LoadRouters routes={routes} />
+      {/* <Row>
+        <Col xs={1} sm={2} lg={4}></Col>
+        <Col xs={22} sm={20} lg={16}>
         </Col>
-        <Col xs={0} sm={2} lg={4}></Col>
-      </Row>
+        <Col xs={1} sm={2} lg={4}></Col>
+      </Row> */}
+
+      <LoadRouters routes={routes} />
       <FooterWeb />
     </>
   );

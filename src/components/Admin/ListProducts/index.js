@@ -186,8 +186,12 @@ function ProductActive({ producto, activeModal, setReloadProducts }) {
         </Button>,
       ]}
     >
+      <img
+        src={img ? img : noAvatar}
+        alt={producto.nombre}
+        style={{ width: "100px", marginRight: "1rem" }}
+      />
       <List.Item.Meta
-        avatar={<Avatar src={img ? img : noAvatar} />}
         title={`${producto.nombre}`}
         description={`Precio: ${producto.precio} Stock: ${
           producto.stock
