@@ -163,7 +163,7 @@ function ProductActive({ producto, activeModal, setReloadProducts }) {
     const token = getAccessToken();
 
     confirm({
-      title: "Eliminando usuario",
+      title: "Eliminando producto",
       content: `¿Seguro de eliminar a ${producto.nombre}?`,
       okText: "Eliminar",
       okType: "danger",

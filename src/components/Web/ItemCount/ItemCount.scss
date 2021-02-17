@@ -1,0 +1,30 @@
+@import "scss";
+
+.item-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $background-grey-light;
+  margin: 0;
+  padding: 0.5rem 1rem;
+
+  &__number {
+    padding: 0;
+    margin: 0 0.3rem;
+    min-width: 70%;
+    text-align: center;
+  }
+
+  &__btn {
+    font-size: 1.2rem;
+    color: $primary-color;
+
+    &-disabled {
+      color: $font-grey;
+
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
+}

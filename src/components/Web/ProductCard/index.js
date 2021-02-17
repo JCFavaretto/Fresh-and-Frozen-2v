@@ -4,6 +4,7 @@ import { Col, Card, Button } from "antd";
 import { getImgProductoApi } from "API/product";
 
 import "components/Web/ProductCard/ProductCard.scss";
+import ProductDetail from "../ProductDetail";
 
 function ProductCard({
   producto,
@@ -11,7 +12,6 @@ function ProductCard({
   setModalTitle,
   setModalContent,
 }) {
-  const { Meta } = Card;
   const [imgSrc, setImgSrc] = useState(null);
 
   getImgProductoApi(producto.img).then((res) => {
@@ -21,7 +21,13 @@ function ProductCard({
   function productDetail() {
     setModalVisible(true);
     setModalTitle(producto.nombre);
-    setModalContent(producto.precio);
+    setModalContent(
+      <ProductDetail
+        producto={producto}
+        img={imgSrc}
+        setModalVisible={setModalVisible}
+      />
+    );
   }
 
   return (

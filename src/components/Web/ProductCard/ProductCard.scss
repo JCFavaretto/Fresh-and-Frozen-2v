@@ -5,7 +5,7 @@
   text-align: center;
   background-image: $background-gradient-inverse;
   border: none;
-  width: 200px;
+  width: 250;
   height: 250px;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
@@ -18,7 +18,7 @@
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 1);
   }
   @media (min-width: $media-breakpoint-up-sm) {
-    width: 180px;
+    width: 200px;
   }
 
   @media (min-width: $media-breakpoint-up-md) {
@@ -32,10 +32,10 @@
   }
 
   &__img {
-    width: 200px;
+    width: 250px;
     height: 150px;
     @media (min-width: $media-breakpoint-up-sm) {
-      width: 180px;
+      width: 200px;
     }
 
     @media (min-width: $media-breakpoint-up-md) {

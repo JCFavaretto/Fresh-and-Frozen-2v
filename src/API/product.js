@@ -174,3 +174,47 @@ export function getProductsApi() {
       return err;
     });
 }
+
+export function getCategoryProductsApi(categoria) {
+  const url = `${basepath}/obtener-productos-categoria?categoria=${categoria}`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  return fetch(url, params)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      console.log(err.err);
+      return err;
+    });
+}
+
+export function getOnSaleProductsApi() {
+  const url = `${basepath}/obtener-productos-oferta`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  return fetch(url, params)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      console.log(err.err);
+      return err;
+    });
+}

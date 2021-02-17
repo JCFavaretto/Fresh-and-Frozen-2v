@@ -73,6 +73,11 @@ const routes = [
         exact: true,
       },
       {
+        path: "/productos/:categoria",
+        component: Products,
+        exact: true,
+      },
+      {
         component: Error404,
       },
     ],

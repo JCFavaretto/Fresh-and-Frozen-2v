@@ -15,15 +15,19 @@ export default function AuthProvider(props) {
     user: null,
     isLoading: true,
   });
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    checkUserLogin(setUser);
-  }, []);
+    checkUserLogin(setUser, setRefresh);
+    if (refresh === true) {
+      setRefresh(false);
+    }
+  }, [refresh]);
 
   return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
 }
 
-function checkUserLogin(setUser) {
+function checkUserLogin(setUser, setRefresh) {
   const accessToken = getAccessToken();
   if (!accessToken) {
     const refreshToken = getRefreshToken();
@@ -32,6 +36,7 @@ function checkUserLogin(setUser) {
       setUser({ user: null, isLoading: false });
     } else {
       refreshAccessToken(refreshToken);
+      setRefresh(true);
     }
   } else {
     setUser({ isLoading: false, user: jwtDecode(accessToken) });

@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Menu } from "antd";
 import { Link } from "react-router-dom";
 
 import logo from "assets/img/logo.jfif";
 
+import CartIcon from "components/Web/CartIcon";
 import "components/Web/MenuTop/MenuTop.scss";
 import useAuth from "hooks/useAuth";
-import { MenuOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { MenuOutlined } from "@ant-design/icons";
 import { logout } from "API/auth";
 
 function MenuTop() {
   const { user, isLoading } = useAuth();
   const [subMenu, setSubMenu] = useState(false);
+
+  const [isUser, setIsUser] = useState(false);
+
   function logoutUser() {
     logout();
     window.location.reload();
   }
+
+  useEffect(() => {
+    setIsUser(!isLoading && user ? true : false);
+  }, [user, isLoading]); //eslint-disable-line
 
   return (
     <div className="menu-completo">
@@ -37,23 +45,23 @@ function MenuTop() {
             <Link to="/productos">Todos los productos</Link>
           </Menu.Item>
 
-          <Menu.Item key="1">
-            <Link to="/promociones">Promociones</Link>
+          <Menu.Item key="2">
+            <Link to="/productos/promociones">Promociones</Link>
           </Menu.Item>
 
-          <Menu.Item key="1">
-            <Link to="/frescos">Frescos</Link>
+          <Menu.Item key="3">
+            <Link to="/productos/frescos">Frescos</Link>
           </Menu.Item>
 
-          <Menu.Item key="1">
-            <Link to="/congelados">Congelados</Link>
+          <Menu.Item key="4">
+            <Link to="/productos/congelados">Congelados</Link>
           </Menu.Item>
 
-          <Menu.Item key="1">
-            <Link to="/rebozados">Rebozados</Link>
+          <Menu.Item key="">
+            <Link to="/productos/rebozados">Rebozados</Link>
           </Menu.Item>
         </Menu.SubMenu>
-        {!isLoading && user ? (
+        {isUser ? (
           <Menu.SubMenu className="menu-top-web__item" title={user.name}>
             <Menu.Item>
               <Link to="/usuario">Mis Datos</Link>
@@ -76,9 +84,7 @@ function MenuTop() {
           </Menu.Item>
         )}
         <Menu.Item className="menu-top-web__iconos">
-          <Button className="menu-top-web__iconos-btn-cart">
-            <ShoppingCartOutlined />
-          </Button>
+          <CartIcon />
           <Button
             className="menu-top-web__iconos-btn-menu"
             onClick={() => {
@@ -110,23 +116,23 @@ function MenuTop() {
             <Link to="/productos">Todos los productos</Link>
           </Menu.Item>
 
-          <Menu.Item key="1">
-            <Link to="/promociones">Promociones</Link>
+          <Menu.Item key="2">
+            <Link to="/productos/promociones">Promociones</Link>
           </Menu.Item>
 
-          <Menu.Item key="1">
-            <Link to="/frescos">Frescos</Link>
+          <Menu.Item key="3">
+            <Link to="/productos/frescos">Frescos</Link>
           </Menu.Item>
 
-          <Menu.Item key="1">
-            <Link to="/congelados">Congelados</Link>
+          <Menu.Item key="4">
+            <Link to="/productos/congelados">Congelados</Link>
           </Menu.Item>
 
-          <Menu.Item key="1">
-            <Link to="/rebozados">Rebozados</Link>
+          <Menu.Item key="5">
+            <Link to="/productos/rebozados">Rebozados</Link>
           </Menu.Item>
         </Menu.SubMenu>
-        {!isLoading && user ? (
+        {isUser ? (
           <Menu.SubMenu className="menu-expandible__item" title={user.name}>
             <Menu.Item>
               <Link to="/usuario">Mis Datos</Link>

@@ -193,6 +193,12 @@
   }
 }
 
+.ant-menu-submenu {
+  .ant-menu-item-selected {
+    background-color: transparent !important;
+  }
+}
+
 .ant-menu-vertical {
   background-image: $background-gradient;
   li {

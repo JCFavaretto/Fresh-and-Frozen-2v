@@ -175,9 +175,9 @@ function ProductDataForm({ productData, setProductData, handleSubmit }) {
               onChange={(e) => setProductData({ ...productData, categoria: e })}
               value={productData.categoria}
             >
-              <Option value="fresco">Fresco</Option>
-              <Option value="congelado">Congelado</Option>
-              <Option value="rebozado">Rebozado</Option>
+              <Option value="frescos">Fresco</Option>
+              <Option value="congelados">Congelado</Option>
+              <Option value="rebozados">Rebozado</Option>
             </Select>
           </Form.Item>
         </Col>
