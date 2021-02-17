@@ -144,9 +144,11 @@ export function updateUserApi(token, user, userId) {
       return res.json();
     })
     .then((res) => {
+      console.log(res);
       return res;
     })
     .catch((err) => {
+      console.log(err);
       return err;
     });
 }

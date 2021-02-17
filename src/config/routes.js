@@ -5,7 +5,7 @@ import LayoutBasic from "layouts/LayoutBasic";
 //Admin Pages
 import AdminHome from "pages/Admin";
 import AdminSignIn from "pages/Admin/SignIn";
-import User from "pages/Admin/User";
+import AdminUser from "pages/Admin/User";
 import AdminError404 from "pages/Admin/Error404";
 import AdminProducts from "pages/Admin/Products";
 
@@ -15,6 +15,7 @@ import Nosotros from "pages/Web/Nosotros";
 import Login from "pages/Web/Login";
 import Error404 from "pages/Error404";
 import Products from "pages/Web/Products";
+import User from "pages/Web/User";
 
 const routes = [
   {
@@ -34,7 +35,7 @@ const routes = [
       },
       {
         path: "/admin/users",
-        component: User,
+        component: AdminUser,
         exact: true,
       },
       {
@@ -75,6 +76,11 @@ const routes = [
       {
         path: "/productos/:categoria",
         component: Products,
+        exact: true,
+      },
+      {
+        path: "/usuario",
+        component: User,
         exact: true,
       },
       {

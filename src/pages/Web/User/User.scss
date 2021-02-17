@@ -1,1 +1,22 @@
 @import "scss";
+
+.usuario {
+  background-color: $background-light;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+  padding: 1rem;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+
+  &__titulo {
+    color: $primary-color-hover;
+    font-size: 1.4rem;
+    width: 90%;
+    text-align: center;
+    border-bottom: 1px solid $background-secondary;
+  }
+}
