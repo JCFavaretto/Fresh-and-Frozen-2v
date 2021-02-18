@@ -16,6 +16,7 @@ import Login from "pages/Web/Login";
 import Error404 from "pages/Error404";
 import Products from "pages/Web/Products";
 import User from "pages/Web/User";
+import Buy from "pages/Web/Buy";
 
 const routes = [
   {
@@ -81,6 +82,11 @@ const routes = [
       {
         path: "/usuario",
         component: User,
+        exact: true,
+      },
+      {
+        path: "/comprar",
+        component: Buy,
         exact: true,
       },
       {

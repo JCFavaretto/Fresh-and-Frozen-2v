@@ -65,6 +65,28 @@ export function getUsersApi(token) {
     });
 }
 
+export function getUserData(token, id) {
+  const url = `${basepath}/user/${id}`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: token,
+    },
+  };
+
+  return fetch(url, params)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
 export function getUsersActiveApi(token, status) {
   const url = `${basepath}/users-active?active=${status}`;
   const params = {
