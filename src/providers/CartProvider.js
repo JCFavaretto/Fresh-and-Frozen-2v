@@ -18,7 +18,7 @@ export const CartProvider = ({ children }) => {
     if (cart.length > 0) {
       setCart(() => {
         const newCart = cart.map((item) => {
-          if (item._id === cartItem._id) {
+          if (item.id === cartItem.id) {
             item.cantidad = item.cantidad + cartItem.cantidad;
             if (item.cantidad > item.stock) {
               toast.info("Tiene el stock total en el carrito.");
@@ -55,7 +55,7 @@ export const CartProvider = ({ children }) => {
     let count = 0;
     if (cart.length > 0) {
       cart.forEach((item) => {
-        if (item._id === id) {
+        if (item.id === id) {
           count = item.cantidad;
         }
 
@@ -66,7 +66,7 @@ export const CartProvider = ({ children }) => {
   };
 
   function removeFromCart(id) {
-    const newCart = cart.filter((item) => item._id !== id);
+    const newCart = cart.filter((item) => item.id !== id);
     setCart(newCart);
     toast.error("Producto eliminado.");
   }

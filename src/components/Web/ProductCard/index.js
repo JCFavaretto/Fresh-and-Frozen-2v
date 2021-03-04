@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Card, Button } from "antd";
-
-import { getImgProductoApi } from "API/product";
 
 import "components/Web/ProductCard/ProductCard.scss";
 import ProductDetail from "../ProductDetail";
@@ -12,21 +10,11 @@ function ProductCard({
   setModalTitle,
   setModalContent,
 }) {
-  const [imgSrc, setImgSrc] = useState(null);
-
-  getImgProductoApi(producto.img).then((res) => {
-    setImgSrc(res);
-  });
-
   function productDetail() {
     setModalVisible(true);
     setModalTitle(producto.nombre);
     setModalContent(
-      <ProductDetail
-        producto={producto}
-        img={imgSrc}
-        setModalVisible={setModalVisible}
-      />
+      <ProductDetail producto={producto} setModalVisible={setModalVisible} />
     );
   }
 
@@ -51,7 +39,7 @@ function ProductCard({
           <img
             className="card-producto__img"
             alt={producto.descripcion}
-            src={imgSrc}
+            src={producto.img}
           />
         }
       >

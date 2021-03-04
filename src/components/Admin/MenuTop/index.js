@@ -6,11 +6,11 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import "components/Admin/MenuTop/MenuTop.scss";
-import { logout } from "API/auth";
+import { auth } from "../../../Fire";
 
 function MenuTop({ menuCollapsed, setMenuCollapsed }) {
   function logoutUser() {
-    logout();
+    auth.signOut();
     window.location.reload();
   }
 

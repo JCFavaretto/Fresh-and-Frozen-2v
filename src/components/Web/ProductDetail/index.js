@@ -5,7 +5,7 @@ import { Button } from "antd";
 
 import "components/Web/ProductDetail/ProductDetail.scss";
 
-function ProductDetail({ producto, img, setModalVisible }) {
+function ProductDetail({ producto, setModalVisible }) {
   const [count, setCount] = useState(0);
   const [{ addToCart }] = useContext(Carrito);
 
@@ -21,12 +21,16 @@ function ProductDetail({ producto, img, setModalVisible }) {
       <div className="detalle-producto__body">
         <img
           className="detalle-producto__body-img"
-          src={img}
+          src={producto.img}
           alt={producto.nombre}
         />
         <div className="detalle-producto__body-texto">
           <p>{producto.descripcion}</p>
         </div>
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <p>Precio por kilo: {producto.precio}</p>
+        <p>Precio total: {producto.precio * count}</p>
       </div>
       <div className="detalle-producto__footer">
         <ItemCount count={count} setCount={setCount} max={producto.stock} />

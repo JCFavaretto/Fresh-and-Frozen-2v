@@ -1,29 +1,25 @@
 @import "scss";
 
-.product-form{
+.product-form {
+  .upload-img {
+    display: table;
+    margin: 0 auto;
+    border: 2px dashed $border-grey;
+    border-radius: 100px;
+    padding: 0.6rem;
+    margin-bottom: 2rem;
+  }
 
-    .upload-img{
-        display: table;
-        margin: 0 auto;
-        border: 2px dashed $border-grey;
-        border-radius: 100px;
-        padding: 0.6rem;
-        margin-bottom: 2rem;
-         
+  .form-edit {
+    text-align: center;
+
+    .ant-form-item {
+      margin: 0.5rem auto;
+      text-align: left;
     }
 
-    .form-edit{
-        text-align: center;
-
-        .ant-form-item{
-            margin: 0.5rem auto;
-            text-align: left;
-
-        }
-
-        .btn-submit{
-            margin: 2rem auto 0 auto;
-        }
+    .btn-submit {
+      margin: 2rem auto 0 auto;
     }
-
+  }
 }

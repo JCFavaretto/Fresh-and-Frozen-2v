@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 import {
-  getProductsApi,
-  getCategoryProductsApi,
-  getOnSaleProductsApi,
-} from "API/product";
+  getProductsFire,
+  getCategoryProductsFire,
+  getOnSaleProductsFire,
+} from "Fire/product";
 import ProductList from "components/Web/ProductList";
 
 import "pages/Web/Products/Products.scss";
@@ -14,38 +13,16 @@ import { useParams } from "react-router-dom";
 
 function Products() {
   const [productos, setProductos] = useState([]);
-  const [count, setCount] = useState(0);
 
   const { categoria } = useParams();
 
   useEffect(() => {
     if (!categoria) {
-      getProductsApi().then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          setProductos(res.productos);
-          setCount(res.conteo);
-        }
-      });
+      getProductsFire(setProductos);
     } else if (categoria === "promociones") {
-      getOnSaleProductsApi().then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          setProductos(res.productos);
-          setCount(res.conteo);
-        }
-      });
+      getOnSaleProductsFire(setProductos);
     } else {
-      getCategoryProductsApi(categoria).then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          setProductos(res.productos);
-          setCount(res.conteo);
-        }
-      });
+      getCategoryProductsFire(categoria, setProductos);
     }
   }, [categoria]); //eslint-disable-line
 
@@ -64,7 +41,7 @@ function Products() {
             ? "Congelados"
             : "Rebozados"}
         </h1>
-        <ProductList productos={productos} count={count} />
+        <ProductList productos={productos} />
       </Col>
       <Col xs={1} sm={2}></Col>
     </Row>

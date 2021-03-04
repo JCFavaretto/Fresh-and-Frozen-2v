@@ -39,7 +39,7 @@ function CartDetail({ footer }) {
       nombre: item.nombre,
       precio: `$${item.precio}`,
       cantidad: `${item.cantidad} kg.`,
-      key: item._id,
+      key: item.id,
       action: () => removeFromCart(item._id),
     };
   });

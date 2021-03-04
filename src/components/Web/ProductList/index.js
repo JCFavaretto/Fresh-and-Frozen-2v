@@ -22,7 +22,7 @@ function ProductList({ productos }) {
       {productos.map((item) => {
         return (
           <ProductCard
-            key={item._id}
+            key={item.id}
             producto={item}
             setModalVisible={setModalVisible}
             setModalTitle={setModalTitle}

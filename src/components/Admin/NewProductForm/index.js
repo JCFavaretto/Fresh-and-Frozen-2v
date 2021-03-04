@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Avatar, Form, Input, Select, Button, Row, Col, Checkbox } from "antd";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 
 import noAvatar from "assets/img/no-avatar.png";
-import { getAccessToken } from "API/auth";
-import { crearProductoApi, uploadImgProductApi } from "API/product";
+import { uploadImgProductFire } from "Fire/product";
 
 import "components/Admin/NewProductForm/NewProductForm.scss";
 
@@ -14,9 +13,10 @@ function NewProductForm({ setModalVisible, setReloadProducts }) {
     nombre: "",
     precio: "",
     stock: "",
-    categoria: "",
+    cat: "",
     descripcion: "",
-    oferta: false,
+    onSale: false,
+    active: true,
   };
   const [img, setImg] = useState(null);
   const [productData, setProductData] = useState(initialState);
@@ -24,42 +24,36 @@ function NewProductForm({ setModalVisible, setReloadProducts }) {
   async function handleSubmit(e) {
     e.preventDefault();
     if (img === null) {
-      toast.error("Debe agregar una imagen para el producto.");
+      toast.warn("Debe agregar una imagen para el producto.");
+      return;
+    } else if (productData.nombre === "") {
+      toast.warn("Debe agregar un nombre para el producto.");
+      return;
+    } else if (productData.precio === "") {
+      toast.warn("Debe agregar un precio para el producto.");
+      return;
+    } else if (productData.stock === "") {
+      toast.warn("Debe agregar el stock para el producto.");
+      return;
+    } else if (productData.cat === "") {
+      toast.warn("Debe agregar la categoria del producto.");
+      return;
+    } else if (productData.descripcion === "") {
+      toast.warn("Debe agregar una descripcion para el producto.");
       return;
     }
 
     let uploadProducto = productData;
-    const token = getAccessToken();
-    let res = await crearProductoApi(token, uploadProducto);
-    if (!res.ok) {
-      if (
-        res.err &&
-        res.err.message ===
-          "Product validation failed: nombre: Ese nombre ya existe."
-      ) {
-        toast.error("Ya existe un producto con ese nombre.");
-      } else {
-        toast.error(res.message);
-      }
-      return;
-    } else {
-      console.log(img);
-      let producto = res.producto;
-      producto.img = img.file;
-      if (typeof producto.img === "object") {
-        let res2 = await uploadImgProductApi(token, producto.img, producto._id);
-        if (!res2.ok) {
-          toast.error(res2.message);
-          return;
-        } else {
-          toast.success("Producto creado correctamente.");
-          setProductData(initialState);
-          setImg(null);
-          setModalVisible(false);
-          setReloadProducts(true);
-        }
-      }
-    }
+
+    uploadImgProductFire(
+      uploadProducto,
+      img,
+      setImg,
+      setReloadProducts,
+      setProductData,
+      initialState,
+      setModalVisible
+    );
   }
 
   return (
@@ -77,22 +71,11 @@ function NewProductForm({ setModalVisible, setReloadProducts }) {
 function UploadImg({ img, setImg }) {
   const [imgUrl, setImgUrl] = useState(null);
 
-  useEffect(() => {
-    if (img) {
-      if (img.preview) {
-        setImgUrl(img.preview);
-      } else {
-        setImgUrl(img);
-      }
-    } else {
-      setImgUrl(null);
-    }
-  }, [img]);
-
   const onDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
-      setImg({ file, preview: URL.createObjectURL(file) });
+      setImg(file);
+      setImgUrl(URL.createObjectURL(file));
     },
     [setImg]
   );
@@ -167,7 +150,7 @@ function ProductDataForm({ productData, setProductData, handleSubmit }) {
           <Form.Item>
             <Select
               placeholder="Categoria"
-              onChange={(e) => setProductData({ ...productData, categoria: e })}
+              onChange={(e) => setProductData({ ...productData, cat: e })}
               value={productData.categoria}
             >
               <Option value="frescos">Fresco</Option>
@@ -199,9 +182,9 @@ function ProductDataForm({ productData, setProductData, handleSubmit }) {
           }}
         >
           <Checkbox
-            checked={productData.oferta}
+            checked={productData.onSale}
             onChange={(e) =>
-              setProductData({ ...productData, oferta: e.target.checked })
+              setProductData({ ...productData, onSale: e.target.checked })
             }
           >
             En oferta

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Form, Input, Row, Col, Button, Checkbox } from "antd";
-import { toast } from "react-toastify";
 
-import { updateUserApi } from "API/user";
-import { crearOrdenCompraApi } from "API/orders";
-import { getAccessToken } from "API/auth";
+import { firebase } from "Fire";
+import { updateUserFire } from "Fire/user";
+import { setBuyOrderFire } from "Fire/orders";
+
 import useAuth from "hooks/useAuth";
 import Carrito from "providers/CartProvider";
 
@@ -21,7 +21,7 @@ function BuyAddressForm() {
   const [save, setSave] = useState(false);
 
   const { user } = useAuth();
-  const [{ cart, totalGasto }] = useContext(Carrito);
+  const [{ cart, setCart, emptyStorage, totalGasto }] = useContext(Carrito);
 
   function saveAddressData(e) {
     setSave(e.target.checked);
@@ -29,8 +29,6 @@ function BuyAddressForm() {
 
   async function handleBuy(e) {
     e.preventDefault();
-    console.log(direccion);
-    console.log(save);
     const order = {
       comprador: user.id,
       calle: direccion.calle,
@@ -40,23 +38,12 @@ function BuyAddressForm() {
       telefono: direccion.telefono,
       cart: cart,
       total: totalGasto(),
+      date: firebase.firestore.Timestamp.fromDate(new Date()),
     };
-    const token = getAccessToken();
     if (save) {
-      let resUser = await updateUserApi(token, direccion, user.id);
-      if (!resUser.ok) {
-        toast.error(resUser.message);
-      } else {
-        toast.success("Usuario actualizado.");
-      }
+      updateUserFire(direccion, user);
     }
-
-    let res = await crearOrdenCompraApi(token, order);
-    if (!res.ok) {
-      toast.error(res.message);
-    } else {
-      toast.success("Compra exitosa.");
-    }
+    setBuyOrderFire(order, setCart, emptyStorage);
   }
 
   useEffect(() => {

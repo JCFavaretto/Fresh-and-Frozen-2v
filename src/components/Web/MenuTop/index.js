@@ -9,7 +9,7 @@ import "components/Web/MenuTop/MenuTop.scss";
 import useAuth from "hooks/useAuth";
 
 import { MenuOutlined } from "@ant-design/icons";
-import { logout } from "API/auth";
+import { auth } from "Fire";
 
 function MenuTop() {
   const { user, isLoading } = useAuth();
@@ -18,7 +18,7 @@ function MenuTop() {
   const [isUser, setIsUser] = useState(false);
 
   function logoutUser() {
-    logout();
+    auth.signOut();
     window.location.reload();
   }
 

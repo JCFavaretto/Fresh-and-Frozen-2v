@@ -2,17 +2,18 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { Tabs, Col, Row } from "antd";
 
-import { getAccessToken } from "API/auth";
-
 import RegisterForm from "components/RegisterForm";
 import LoginForm from "components/LoginForm";
+
+import useAuth from "hooks/useAuth";
 
 import "pages/Web/Login/Login.scss";
 
 function Login() {
   const { TabPane } = Tabs;
+  const { user } = useAuth();
 
-  if (getAccessToken()) {
+  if (user) {
     return <Redirect to="/" />;
   }
 

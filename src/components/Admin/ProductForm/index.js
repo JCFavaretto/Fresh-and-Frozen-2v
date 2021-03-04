@@ -1,15 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Avatar, Form, Input, Select, Button, Row, Col, Checkbox } from "antd";
 import { useDropzone } from "react-dropzone";
-import { toast } from "react-toastify";
-
 import noAvatar from "assets/img/no-avatar.png";
-import { getAccessToken } from "API/auth";
-import {
-  getImgProductoApi,
-  uploadImgProductApi,
-  updateProductApi,
-} from "API/product";
+
+import { updateImgProductFire, updateProductFire } from "Fire/product";
 
 import "components/Admin/ProductForm/ProductForm.scss";
 
@@ -19,51 +13,21 @@ function ProductForm({ producto, setModalVisible, setReloadProducts }) {
 
   useEffect(() => {
     setProductData(producto);
+    setImg(producto.img);
   }, [producto]);
-
-  useEffect(() => {
-    if (producto.img) {
-      getImgProductoApi(producto.img).then((res) => {
-        setImg(res);
-      });
-    } else {
-      setImg(null);
-    }
-  }, [producto]);
-
-  useEffect(() => {
-    if (img) {
-      setProductData({ ...productData, img: img.file });
-    }
-  }, [img]); //eslint-disable-line
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     let uploadProducto = productData;
-    const token = getAccessToken();
-
-    if (uploadProducto.img !== null && typeof uploadProducto.img === "object") {
-      let res2 = await uploadImgProductApi(
-        token,
-        uploadProducto.img,
-        producto._id
+    if (typeof img === "object") {
+      updateImgProductFire(
+        uploadProducto,
+        img,
+        setModalVisible,
+        setReloadProducts
       );
-      if (!res2.ok) {
-        toast.error(res2.message);
-        return;
-      } else {
-        uploadProducto.img = res2.img;
-      }
-    }
-    let res3 = await updateProductApi(token, uploadProducto, producto._id);
-    if (!res3.ok) {
-      toast.error(res3.message);
-      return;
     } else {
-      toast.success("Producto actualizado correctamente.");
-      setModalVisible(false);
-      setReloadProducts(true);
+      updateProductFire(uploadProducto, setModalVisible, setReloadProducts);
     }
   }
 
@@ -83,21 +47,17 @@ function UploadImg({ img, setImg }) {
   const [imgUrl, setImgUrl] = useState(null);
 
   useEffect(() => {
-    if (img) {
-      if (img.preview) {
-        setImgUrl(img.preview);
-      } else {
-        setImgUrl(img);
-      }
+    if (img !== null && typeof img === "object") {
+      setImgUrl(URL.createObjectURL(img));
     } else {
-      setImgUrl(null);
+      setImgUrl(img);
     }
   }, [img]);
 
   const onDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
-      setImg({ file, preview: URL.createObjectURL(file) });
+      setImg(file);
     },
     [setImg]
   );
@@ -111,10 +71,11 @@ function UploadImg({ img, setImg }) {
   return (
     <div className="upload-img" {...getRootProps()}>
       <input {...getInputProps()} />
+
       {isDragActive ? (
         <Avatar size={150} src={noAvatar} />
       ) : (
-        <Avatar size={150} src={imgUrl ? imgUrl : noAvatar} />
+        <Avatar size={150} src={imgUrl} />
       )}
     </div>
   );
@@ -172,8 +133,8 @@ function ProductDataForm({ productData, setProductData, handleSubmit }) {
           <Form.Item>
             <Select
               placeholder="Categoria"
-              onChange={(e) => setProductData({ ...productData, categoria: e })}
-              value={productData.categoria}
+              onChange={(e) => setProductData({ ...productData, cat: e })}
+              value={productData.cat}
             >
               <Option value="frescos">Fresco</Option>
               <Option value="congelados">Congelado</Option>
@@ -204,9 +165,9 @@ function ProductDataForm({ productData, setProductData, handleSubmit }) {
           }}
         >
           <Checkbox
-            checked={productData.oferta}
+            checked={productData.onSale}
             onChange={(e) =>
-              setProductData({ ...productData, oferta: e.target.checked })
+              setProductData({ ...productData, onSale: e.target.checked })
             }
           >
             En oferta

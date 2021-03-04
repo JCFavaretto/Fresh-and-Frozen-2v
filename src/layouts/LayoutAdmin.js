@@ -13,7 +13,7 @@ import useAuth from "hooks/useAuth";
 function LayoutAdmin(props) {
   const { routes } = props;
   const [menuCollapsed, setMenuCollapsed] = useState(true);
-  const { Header, Content, Footer } = Layout;
+  const { Header, Content } = Layout;
 
   const { user, isLoading } = useAuth();
 
@@ -44,9 +44,6 @@ function LayoutAdmin(props) {
             <Content className="layout-admin__content">
               <LoadRouters routes={routes} />
             </Content>
-            <Footer className="layout-admin__footer">
-              Juan Cruz Favaretto
-            </Footer>
           </Layout>
         </Layout>
       );

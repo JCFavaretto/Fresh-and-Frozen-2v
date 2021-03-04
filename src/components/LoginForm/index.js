@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
-import { toast } from "react-toastify";
 
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "utils/constants";
-import { loginAPI } from "API/user";
+import { loginFire } from "Fire/user";
 
 import "components/LoginForm/LoginForm.scss";
 
@@ -30,33 +28,9 @@ function LoginForm({ location }) {
     }
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-
-    const result = await loginAPI(inputs);
-
-    if (!result.ok) {
-      if (
-        result.message &&
-        (result.message === "Usuario no encontrado" ||
-          result.message === "La contraseña es incorrecta")
-      ) {
-        toast.error("Usuario y/o contraseña incorrectos");
-      } else {
-        toast.error("Error en la base de datos. Intente mas tarde.");
-      }
-    } else {
-      const { accessToken, refreshToken } = result;
-      localStorage.setItem(ACCESS_TOKEN, accessToken);
-      localStorage.setItem(REFRESH_TOKEN, refreshToken);
-      toast.success("Login correcto");
-
-      if (location.pathname === "/admin/login") {
-        window.location.href = "/admin";
-      } else {
-        window.location.href = "/";
-      }
-    }
+    loginFire(inputs, location);
   }
 
   return (

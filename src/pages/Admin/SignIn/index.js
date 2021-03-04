@@ -5,13 +5,15 @@ import { Redirect } from "react-router-dom";
 import "pages/Admin/SignIn/SignIn.scss";
 import RegisterForm from "components/RegisterForm";
 import LoginForm from "components/LoginForm";
-
-import { getAccessToken } from "API/auth";
+import useAuth from "hooks/useAuth";
 
 function SignIn() {
   const { Content } = Layout;
   const { TabPane } = Tabs;
-  if (getAccessToken()) {
+
+  const { user } = useAuth();
+
+  if (user) {
     return <Redirect to="/admin" />;
   }
 

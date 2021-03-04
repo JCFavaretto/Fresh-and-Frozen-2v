@@ -1,25 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Switch, List, Avatar, Button, Modal as ModalAnt } from "antd";
+import React, { useState } from "react";
+import { Switch, List, Button } from "antd";
 import {
   CheckOutlined,
-  DeleteOutlined,
   EditOutlined,
   StopOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 
-import { getAvatarApi, changeUserStatus, deleteUser } from "API/user";
-import { getAccessToken } from "API/auth";
+import { changeUserStatusFire } from "Fire/user";
 
-import noAvatar from "assets/img/no-avatar.png";
 import Modal from "components/Modal";
 import EditUserForm from "components/Admin/EditUserForm";
 
 import "components/Admin/ListUsers/ListUsers.scss";
-import { toast } from "react-toastify";
 import RegisterForm from "components/RegisterForm";
-
-const { confirm } = ModalAnt;
 
 function ListUsers({ usersActive, usersInactive, setReloadUsers }) {
   const [active, setActive] = useState(true);
@@ -105,56 +99,8 @@ function UsersActive({
 }
 
 function UserActive({ user, activeModal, setReloadUsers }) {
-  const [avatar, setAvatar] = useState(null);
-
-  useEffect(() => {
-    if (user.avatar) {
-      getAvatarApi(user.avatar).then((res) => {
-        setAvatar(res);
-      });
-    }
-  }, [user]);
-
   function desactivateUser(user) {
-    const token = getAccessToken();
-    changeUserStatus(token, false, user._id)
-      .then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          toast.success("Usuario desactivado");
-        }
-      })
-      .finally(() => {
-        setReloadUsers(true);
-      });
-  }
-
-  function removeUser(token, user) {
-    deleteUser(token, user._id)
-      .then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          toast.success(res.message);
-        }
-      })
-      .finally(() => {
-        setReloadUsers(true);
-      });
-  }
-
-  function showDeleteConfirm() {
-    const token = getAccessToken();
-
-    confirm({
-      title: "Eliminando usuario",
-      content: `¿Seguro de eliminar a ${user.email}?`,
-      okText: "Eliminar",
-      okType: "danger",
-      cancelText: "Cancelar",
-      onOk: () => removeUser(token, user),
-    });
+    changeUserStatusFire(false, user, setReloadUsers);
   }
 
   return (
@@ -166,13 +112,9 @@ function UserActive({ user, activeModal, setReloadUsers }) {
         <Button type="danger" onClick={() => desactivateUser(user)}>
           <StopOutlined />
         </Button>,
-        <Button type="danger" onClick={showDeleteConfirm}>
-          <DeleteOutlined />
-        </Button>,
       ]}
     >
       <List.Item.Meta
-        avatar={<Avatar src={avatar ? avatar : noAvatar} />}
         title={`${user.name} ${user.lastName}`}
         description={user.email}
       />
@@ -194,58 +136,8 @@ function UsersInactive({ users, setReloadUsers }) {
 }
 
 function UserInactive({ user, setReloadUsers }) {
-  const [avatar, setAvatar] = useState(null);
-
-  useEffect(() => {
-    if (user.avatar) {
-      getAvatarApi(user.avatar).then((res) => {
-        setAvatar(res);
-      });
-    } else {
-      setAvatar(null);
-    }
-  }, [user]);
-
   function activateUser(user) {
-    const token = getAccessToken();
-    changeUserStatus(token, true, user._id)
-      .then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          toast.success("Usuario activado");
-        }
-      })
-      .finally(() => {
-        setReloadUsers(true);
-      });
-  }
-
-  function removeUser(token, user) {
-    deleteUser(token, user._id)
-      .then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          toast.success(res.message);
-        }
-      })
-      .finally(() => {
-        setReloadUsers(true);
-      });
-  }
-
-  function showDeleteConfirm() {
-    const token = getAccessToken();
-
-    confirm({
-      title: "Eliminando usuario",
-      content: `¿Seguro de eliminar a ${user.email}?`,
-      okText: "Eliminar",
-      okType: "danger",
-      cancelText: "Cancelar",
-      onOk: () => removeUser(token, user),
-    });
+    changeUserStatusFire(true, user, setReloadUsers);
   }
 
   return (
@@ -254,13 +146,9 @@ function UserInactive({ user, setReloadUsers }) {
         <Button type="primary" onClick={() => activateUser(user)}>
           <CheckOutlined />
         </Button>,
-        <Button type="danger" onClick={showDeleteConfirm}>
-          <DeleteOutlined />
-        </Button>,
       ]}
     >
       <List.Item.Meta
-        avatar={<Avatar src={avatar ? avatar : noAvatar} />}
         title={`${user.name} ${user.lastName}`}
         description={user.email}
       />

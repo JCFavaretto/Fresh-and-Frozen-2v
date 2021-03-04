@@ -8,7 +8,7 @@ import {
   namesValidation,
   minLengthValidation,
 } from "utils/formValidation";
-import { signUpAPI } from "API/user";
+import { signUpFire } from "Fire/user";
 
 import "components/RegisterForm/RegisterForm.scss";
 
@@ -57,34 +57,27 @@ export default function RegisterForm({ setReloadUsers = false }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (inputs.password !== inputs.repeatPassword) {
+    if (!formValid.name || !formValid.lastName) {
+      toast.error("Formato invalido en el nombre.");
+    } else if (!formValid.lastName) {
+      toast.error("Formato invalido en el apellido.");
+    } else if (!formValid.email) {
+      toast.error("Formato invalido en el email.");
+    } else if (!formValid.password) {
+      toast.error("La contraseña debe tener un minimo de 8 caracteres.");
+    } else if (inputs.password !== inputs.repeatPassword) {
       toast.error("Las contraseñas no coinciden");
     } else {
-      const result = await signUpAPI(inputs);
-      if (!result.ok) {
-        if (
-          result.err &&
-          result.err.message ===
-            "User validation failed: email: Ese email ya existe."
-        ) {
-          toast.error("Ese email ya esta registrado");
-        } else {
-          console.log(result);
-          toast.error(result.message);
-        }
-      } else {
-        toast.success("Registro completado");
-        setInputs({
-          name: "",
-          lastName: "",
-          email: "",
-          password: "",
-          repeatPassword: "",
-        });
-        if (setReloadUsers) {
-          setReloadUsers(true);
-        }
+      await signUpFire(inputs);
+      setInputs({
+        name: "",
+        lastName: "",
+        email: "",
+        password: "",
+        repeatPassword: "",
+      });
+      if (setReloadUsers) {
+        setReloadUsers(true);
       }
     }
   };

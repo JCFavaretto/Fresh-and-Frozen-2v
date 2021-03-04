@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Switch, List, Avatar, Button, Modal as ModalAnt } from "antd";
 import {
   CheckOutlined,
@@ -7,16 +7,9 @@ import {
   PlusOutlined,
   StopOutlined,
 } from "@ant-design/icons";
-import { toast } from "react-toastify";
 
-import { getAccessToken } from "API/auth";
-import {
-  getImgProductoApi,
-  changeProductStatus,
-  borrarProductoApi,
-} from "API/product";
+import { changeProductStatusFire, borrarProductoApiFire } from "Fire/product";
 
-import noAvatar from "assets/img/no-avatar.png";
 import Modal from "components/Modal";
 import ProductForm from "components/Admin/ProductForm";
 import NewProductForm from "components/Admin/NewProductForm";
@@ -120,55 +113,22 @@ function ProductsActive({
 }
 
 function ProductActive({ producto, activeModal, setReloadProducts }) {
-  const [img, setImg] = useState(null);
-
-  useEffect(() => {
-    if (producto.img) {
-      getImgProductoApi(producto.img).then((res) => {
-        setImg(res);
-      });
-    }
-  }, [producto]);
-
   function desactivarProducto(producto) {
-    const token = getAccessToken();
-    changeProductStatus(token, false, producto._id)
-      .then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          toast.success("Producto desactivado");
-        }
-      })
-      .finally(() => {
-        setReloadProducts(true);
-      });
+    changeProductStatusFire(false, producto, setReloadProducts);
   }
 
-  function removeProduct(token, producto) {
-    borrarProductoApi(token, producto._id)
-      .then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          toast.success(res.message);
-        }
-      })
-      .finally(() => {
-        setReloadProducts(true);
-      });
+  function removeProduct(producto) {
+    borrarProductoApiFire(producto.nombre, producto.id, setReloadProducts);
   }
 
   function showDeleteConfimation() {
-    const token = getAccessToken();
-
     confirm({
       title: "Eliminando producto",
       content: `¿Seguro de eliminar a ${producto.nombre}?`,
       okText: "Eliminar",
       okType: "danger",
       cancelText: "Cancelar",
-      onOk: () => removeProduct(token, producto),
+      onOk: () => removeProduct(producto),
     });
   }
 
@@ -187,7 +147,7 @@ function ProductActive({ producto, activeModal, setReloadProducts }) {
       ]}
     >
       <img
-        src={img ? img : noAvatar}
+        src={producto.img}
         alt={producto.nombre}
         style={{ width: "100px", marginRight: "1rem" }}
       />
@@ -195,7 +155,7 @@ function ProductActive({ producto, activeModal, setReloadProducts }) {
         title={`${producto.nombre}`}
         description={`Precio: ${producto.precio} Stock: ${
           producto.stock
-        } Oferta: ${producto.oferta ? "Si" : "No"}`}
+        } Oferta: ${producto.onSale ? "Si" : "No"}`}
       />
     </List.Item>
   );
@@ -218,55 +178,22 @@ function ProductsInactive({ productos, setReloadProducts }) {
 }
 
 function ProductInactive({ producto, setReloadProducts }) {
-  const [img, setImg] = useState(null);
-
-  useEffect(() => {
-    if (producto.img) {
-      getImgProductoApi(producto.img).then((res) => {
-        setImg(res);
-      });
-    }
-  }, [producto]);
-
   function ActivarProducto(producto) {
-    const token = getAccessToken();
-    changeProductStatus(token, true, producto._id)
-      .then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          toast.success("Producto activado.");
-        }
-      })
-      .finally(() => {
-        setReloadProducts(true);
-      });
+    changeProductStatusFire(true, producto, setReloadProducts);
   }
 
-  function removeProduct(token, producto) {
-    borrarProductoApi(token, producto._id)
-      .then((res) => {
-        if (!res.ok) {
-          toast.error(res.message);
-        } else {
-          toast.success(res.message);
-        }
-      })
-      .finally(() => {
-        setReloadProducts(true);
-      });
+  function removeProduct(producto) {
+    borrarProductoApiFire(producto.nombre, producto.id, setReloadProducts);
   }
 
   function showDeleteConfimation() {
-    const token = getAccessToken();
-
     confirm({
       title: "Eliminando usuario",
       content: `¿Seguro de eliminar a ${producto.nombre}?`,
       okText: "Eliminar",
       okType: "danger",
       cancelText: "Cancelar",
-      onOk: () => removeProduct(token, producto),
+      onOk: () => removeProduct(producto),
     });
   }
 
@@ -282,7 +209,7 @@ function ProductInactive({ producto, setReloadProducts }) {
       ]}
     >
       <List.Item.Meta
-        avatar={<Avatar src={img ? img : noAvatar} />}
+        avatar={<Avatar src={producto.img} />}
         title={`${producto.nombre}`}
         description={`Precio: ${producto.precio} Stock: ${producto.stock} `}
       />
