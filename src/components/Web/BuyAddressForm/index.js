@@ -17,6 +17,7 @@ function BuyAddressForm() {
     depto: "",
     piso: "",
     telefono: "",
+    entregado: false,
   });
   const [save, setSave] = useState(false);
 

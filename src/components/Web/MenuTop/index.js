@@ -68,7 +68,7 @@ function MenuTop() {
               <Link to="/usuario">Mis Datos</Link>
             </Menu.Item>
             <Menu.Item>
-              <Link to="/compras">Mis Compras</Link>
+              <Link to="/mis-compras">Mis Compras</Link>
             </Menu.Item>
             <Menu.Item>
               <p
@@ -139,7 +139,7 @@ function MenuTop() {
               <Link to="/usuario">Mis Datos</Link>
             </Menu.Item>
             <Menu.Item>
-              <Link to="/compras">Mis Compras</Link>
+              <Link to="/mis-compras">Mis Compras</Link>
             </Menu.Item>
             <Menu.Item>
               <p

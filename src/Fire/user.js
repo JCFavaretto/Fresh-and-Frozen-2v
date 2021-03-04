@@ -1,7 +1,7 @@
 import { db, auth } from "Fire";
 import { toast } from "react-toastify";
 
-export function signUpFire(data) {
+export function signUpFire(data, setInputs, setReloadUsers) {
   auth
     .createUserWithEmailAndPassword(data.email, data.password)
     .then((cred) => {
@@ -17,6 +17,16 @@ export function signUpFire(data) {
         })
         .then(() => {
           toast.success("Usuario creado exitosamente.");
+          setInputs({
+            name: "",
+            lastName: "",
+            email: "",
+            password: "",
+            repeatPassword: "",
+          });
+          if (setReloadUsers) {
+            setReloadUsers(true);
+          }
         })
         .catch((err) => {
           console.log(err);

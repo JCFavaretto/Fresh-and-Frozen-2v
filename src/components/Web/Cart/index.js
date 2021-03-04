@@ -10,7 +10,7 @@ import Carrito from "providers/CartProvider";
 
 function Cart({ setVisible }) {
   const { user, isLoading } = useAuth();
-  const [{ cart }] = useContext(Carrito);
+  const [{ cart, removeFromCart, totalGasto }] = useContext(Carrito);
 
   return (
     <>
@@ -32,6 +32,9 @@ function Cart({ setVisible }) {
             )}
           </Button>
         }
+        cart={cart}
+        removeFromCart={removeFromCart}
+        totalGasto={totalGasto()}
       />
     </>
   );

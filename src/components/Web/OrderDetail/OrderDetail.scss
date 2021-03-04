@@ -1,0 +1,40 @@
+@import "scss";
+
+.order-detail {
+  width: 100%;
+
+  &__subtitulo {
+    border-bottom: 0.5px solid $background-secondary;
+    text-align: center;
+    font-size: 1rem;
+    margin: 0.5rem auto;
+    color: $primary-color-hover;
+    width: 90%;
+  }
+
+  &__datos {
+    padding: 1rem;
+  }
+
+  &__dato {
+    display: flex;
+
+    p {
+      width: 50%;
+      color: $primary-color;
+    }
+    span {
+      width: 50%;
+      color: $background-secondary;
+      text-align: center;
+    }
+  }
+
+  .ant-table {
+    color: $primary-color;
+  }
+  .ant-table-footer {
+    background-color: $background-grey-light;
+    color: $background-secondary;
+  }
+}

@@ -68,17 +68,7 @@ export default function RegisterForm({ setReloadUsers = false }) {
     } else if (inputs.password !== inputs.repeatPassword) {
       toast.error("Las contraseñas no coinciden");
     } else {
-      await signUpFire(inputs);
-      setInputs({
-        name: "",
-        lastName: "",
-        email: "",
-        password: "",
-        repeatPassword: "",
-      });
-      if (setReloadUsers) {
-        setReloadUsers(true);
-      }
+      signUpFire(inputs);
     }
   };
 
