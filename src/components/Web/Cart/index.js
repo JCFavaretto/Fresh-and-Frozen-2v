@@ -17,7 +17,11 @@ function Cart({ setVisible }) {
       <CartDetail
         footer={
           <Button type="primary">
-            {!isLoading && !user ? (
+            {cart.length === 0 ? (
+              <Link to="/productos" onClick={() => setVisible(false)}>
+                Ir a productos
+              </Link>
+            ) : !isLoading && !user ? (
               <Link to="/login" onClick={() => setVisible(false)}>
                 Ingresar
               </Link>

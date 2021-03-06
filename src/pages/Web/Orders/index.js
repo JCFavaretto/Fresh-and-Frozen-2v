@@ -17,10 +17,9 @@ function Orders() {
 
   useEffect(() => {
     if (!isLoading && user) {
-      getOrders(user.id, setOrders, setLoading);
+      getOrders(user.uid, setOrders, setLoading);
     }
   }, [user]);
-  console.log(orders[order]);
 
   return (
     <Row style={{ minHeight: "82vh" }}>

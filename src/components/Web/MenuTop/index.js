@@ -18,8 +18,9 @@ function MenuTop() {
   const [isUser, setIsUser] = useState(false);
 
   function logoutUser() {
-    auth.signOut();
-    window.location.reload();
+    auth.signOut().then(() => {
+      window.location.reload();
+    });
   }
 
   useEffect(() => {

@@ -28,10 +28,10 @@ function BuyAddressForm() {
     setSave(e.target.checked);
   }
 
-  async function handleBuy(e) {
+  function handleBuy(e) {
     e.preventDefault();
     const order = {
-      comprador: user.id,
+      comprador: user.uid,
       calle: direccion.calle,
       altura: direccion.altura,
       depto: direccion.depto,
@@ -58,7 +58,6 @@ function BuyAddressForm() {
           depto: user.depto,
           telefono: user.telefono,
         });
-        setSave(true);
       }
     }
   }, [user]); //eslint-disable-line

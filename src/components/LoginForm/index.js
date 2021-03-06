@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
+import google from "assets/img/google.svg";
 
-import { loginFire } from "Fire/user";
+import { loginFire, googleSignIn } from "Fire/user";
 
 import "components/LoginForm/LoginForm.scss";
 
@@ -67,6 +68,12 @@ function LoginForm({ location }) {
           disabled={disabledLogin()}
         >
           Entrar
+        </Button>
+      </Form.Item>
+      <Form.Item>
+        <Button className="login-form__button-google" onClick={googleSignIn}>
+          <img src={google} alt="" width="20" style={{ marginRight: "1rem" }} />{" "}
+          Iniciar sesion con google
         </Button>
       </Form.Item>
     </Form>

@@ -1,4 +1,4 @@
-import { db, auth } from "Fire";
+import { firebase, db, auth } from "Fire";
 import { toast } from "react-toastify";
 
 export function signUpFire(data, setInputs, setReloadUsers) {
@@ -91,8 +91,8 @@ export function changeUserStatusFire(status, user, setReloadUsers) {
 
 export function updateUserFire(data, user, setEdit, setReloadUsers) {
   db.collection("users")
-    .doc(user.id)
-    .update({
+    .doc(user.uid)
+    .set({
       ...user,
       ...data,
     })
@@ -106,5 +106,45 @@ export function updateUserFire(data, user, setEdit, setReloadUsers) {
     .catch((err) => {
       console.log(err);
       toast.error("El usuario no se actualizo correctamente.");
+    });
+}
+
+export function googleSignIn() {
+  let provider = new firebase.auth.GoogleAuthProvider();
+
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+      var user = result.user;
+      return user;
+    })
+    .then((user) => {
+      db.collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (!doc.exists) {
+            let dname = user.displayName.split(" ");
+            let apellido = dname[dname.length - 1];
+            dname.pop();
+            db.collection("users")
+              .doc(user.uid)
+              .set({
+                name: dname.join(" "),
+                lastName: apellido,
+                email: user.email,
+                date: new Date(),
+                role: "USER_ROLE",
+                active: true,
+              });
+          }
+        })
+        .then(() => {
+          window.location.reload();
+        });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
