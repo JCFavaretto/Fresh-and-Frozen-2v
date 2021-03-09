@@ -77,7 +77,7 @@ export function getActiveUSersFire(status, setUsers) {
 
 export function changeUserStatusFire(status, user, setReloadUsers) {
   db.collection("users")
-    .doc(user.id)
+    .doc(user.uid)
     .update({ ...user, active: status })
     .then(() => {
       toast.success("Usuario actualizado.");

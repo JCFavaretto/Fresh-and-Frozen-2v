@@ -40,7 +40,9 @@ export default function AuthProvider(props) {
                   });
               } else toast.error("No se inicio sesión correctamente.");
             }
-            setUser({ user: { uid, ...doc.data() }, isLoading: false });
+            if (doc.data().active === false) {
+              auth.signOut();
+            } else setUser({ user: { uid, ...doc.data() }, isLoading: false });
           })
           .catch((err) => {
             console.log(err);
