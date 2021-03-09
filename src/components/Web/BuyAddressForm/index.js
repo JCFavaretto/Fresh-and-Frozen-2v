@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Form, Input, Row, Col, Button, Checkbox } from "antd";
+import { Form, Input, Row, Col, Button, Checkbox, Select } from "antd";
+import { useHistory } from "react-router";
 
 import { firebase } from "Fire";
 import { updateUserFire } from "Fire/user";
@@ -9,16 +10,19 @@ import useAuth from "hooks/useAuth";
 import Carrito from "providers/CartProvider";
 
 import "components/Web/BuyAddressForm/BuyAddressForm.scss";
+import { toast } from "react-toastify";
 
 function BuyAddressForm() {
+  const history = useHistory();
+  const { Option } = Select;
   const [direccion, setDireccion] = useState({
     calle: "",
     altura: "",
     depto: "",
     piso: "",
     telefono: "",
-    entregado: false,
   });
+  const [deliveryDay, setDeliveryDay] = useState(null);
   const [save, setSave] = useState(false);
 
   const { user } = useAuth();
@@ -30,21 +34,34 @@ function BuyAddressForm() {
 
   function handleBuy(e) {
     e.preventDefault();
-    const order = {
-      comprador: user.uid,
-      calle: direccion.calle,
-      altura: direccion.altura,
-      depto: direccion.depto,
-      piso: direccion.piso,
-      telefono: direccion.telefono,
-      cart: cart,
-      total: totalGasto(),
-      date: firebase.firestore.Timestamp.fromDate(new Date()),
-    };
-    if (save) {
-      updateUserFire(direccion, user);
+    if (direccion.calle === "" || direccion.altura === "") {
+      toast.error("Debe agregar dirreción de entrega.");
+    } else if (direccion.telefono === "") {
+      toast.error("Debe ingresar un numero de telefono.");
+    } else if (!deliveryDay) {
+      toast.error("Seleccione dia de entrega.");
+    } else {
+      const order = {
+        comprador: user.uid,
+        nombre: user.name + " " + user.lastName,
+        calle: direccion.calle,
+        altura: direccion.altura,
+        depto: direccion.depto,
+        piso: direccion.piso,
+        telefono: direccion.telefono,
+        entregado: false,
+        cancelada: false,
+        onTheWay: false,
+        cart: cart,
+        total: totalGasto(),
+        deliveryDay,
+        date: firebase.firestore.Timestamp.fromDate(new Date()),
+      };
+      if (save) {
+        updateUserFire(direccion, user);
+      }
+      setBuyOrderFire(order, setCart, emptyStorage);
     }
-    setBuyOrderFire(order, setCart, emptyStorage);
   }
 
   useEffect(() => {
@@ -61,6 +78,12 @@ function BuyAddressForm() {
       }
     }
   }, [user]); //eslint-disable-line
+
+  useEffect(() => {
+    if (cart.length === 0) {
+      history.push("/");
+    }
+  }, [cart]); //eslint-disable-line
 
   return (
     <Form className="address-form" onSubmitCapture={(e) => handleBuy(e)}>
@@ -96,10 +119,10 @@ function BuyAddressForm() {
           <Form.Item>
             <Input
               type="text"
-              placeholder="Departamento"
-              value={direccion.depto}
+              placeholder="Piso"
+              value={direccion.piso}
               onChange={(e) =>
-                setDireccion({ ...direccion, depto: e.target.value })
+                setDireccion({ ...direccion, piso: e.target.value })
               }
             />
           </Form.Item>
@@ -108,10 +131,10 @@ function BuyAddressForm() {
           <Form.Item>
             <Input
               type="text"
-              placeholder="Piso"
-              value={direccion.piso}
+              placeholder="Departamento"
+              value={direccion.depto}
               onChange={(e) =>
-                setDireccion({ ...direccion, piso: e.target.value })
+                setDireccion({ ...direccion, depto: e.target.value })
               }
             />
           </Form.Item>
@@ -130,9 +153,25 @@ function BuyAddressForm() {
             />
           </Form.Item>
         </Col>
+        <Col span={24}>
+          <Form.Item label="Las entregas son entre las 12:00 y las 14:00 horas">
+            <Select
+              placeholder="Dia de entrega"
+              onChange={(e) => setDeliveryDay(e)}
+              value={deliveryDay}
+              required
+            >
+              <Option value="lunes">Lunes</Option>
+              <Option value="martes">Martes</Option>
+              <Option value="miercoles">Miercoles</Option>
+              <Option value="jueves">Jueves</Option>
+              <Option value="viernes">Viernes</Option>
+            </Select>
+          </Form.Item>
+        </Col>
       </Row>
       <Row gutter={24}>
-        <Col style={{ margin: "0 auto" }} span={20}>
+        <Col style={{ margin: "1rem auto" }} span={15}>
           <Checkbox checked={save} onChange={saveAddressData}>
             Guardar datos{" "}
           </Checkbox>

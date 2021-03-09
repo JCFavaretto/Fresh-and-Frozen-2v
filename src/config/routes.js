@@ -3,11 +3,11 @@ import LayoutAdmin from "layouts/LayoutAdmin";
 import LayoutBasic from "layouts/LayoutBasic";
 
 //Admin Pages
-import AdminHome from "pages/Admin";
 import AdminSignIn from "pages/Admin/SignIn";
 import AdminUser from "pages/Admin/User";
 import AdminError404 from "pages/Admin/Error404";
 import AdminProducts from "pages/Admin/Products";
+import AdminOrders from "pages/Admin/Orders";
 
 //Pages
 import Home from "pages/Web/Home";
@@ -27,7 +27,7 @@ const routes = [
     routes: [
       {
         path: "/admin",
-        component: AdminHome,
+        component: AdminOrders,
         exact: true,
       },
       {
@@ -43,6 +43,11 @@ const routes = [
       {
         path: "/admin/productos",
         component: AdminProducts,
+        exact: true,
+      },
+      {
+        path: "/admin/orders",
+        component: AdminOrders,
         exact: true,
       },
       {

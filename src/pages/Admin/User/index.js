@@ -21,6 +21,7 @@ function User() {
 
   return (
     <div className="users">
+      <h1 className="users__titulo">Menu Usuarios</h1>
       <ListUsers
         usersActive={usersActive}
         usersInactive={usersInactive}

@@ -1,39 +1,52 @@
 @import "scss";
 
-.menu-top{
+.menu-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+
+  button {
+    background-color: transparent;
+    color: $font-light;
+
+    &:hover {
+      color: $primary-color;
+    }
+    &:focus,
+    &:active {
+      color: $font-light;
+    }
+  }
+
+  &__left {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100vw;
+    &-logo {
+      margin: 0;
+      color: $font-light;
+      width: 180px;
+      padding: 0 10px;
+    }
+  }
 
-    button{
-        background-color: transparent;
-        color: $font-light;
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 
-        &:hover{
-            color: $primary-color;
-        }
-        &:focus,
-        &:active{
-            color: $font-light;
-        }
+    .anticon {
+      font-size: 1.2rem;
     }
 
-    &__left{
-        display: flex;
-        align-items: center;
-        &-logo{
-            margin: 0;
-            color: $font-light;
-            width: 180px;
-            padding: 0 10px;
-        }
+    &-hide {
+      display: none !important;
+      font-size: 1.1rem;
+      margin-left: 1rem;
+
+      @media (min-width: 550px) {
+        display: inline-block !important;
+      }
     }
-
-    &__right{
-
-        padding: 0.5rem 2rem 0 0
-    }
-
-
-} 
+  }
+}

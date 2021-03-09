@@ -71,6 +71,11 @@ function MenuTop() {
             <Menu.Item>
               <Link to="/mis-compras">Mis Compras</Link>
             </Menu.Item>
+            {user.role === "ADMIN_ROLE" && (
+              <Menu.Item>
+                <Link to="/admin">Seccion Admin</Link>
+              </Menu.Item>
+            )}
             <Menu.Item>
               <p
                 onClick={logoutUser}
@@ -142,6 +147,11 @@ function MenuTop() {
             <Menu.Item>
               <Link to="/mis-compras">Mis Compras</Link>
             </Menu.Item>
+            {user.role === "ADMIN_ROLE" && (
+              <Menu.Item>
+                <Link to="/admin">Seccion Admin</Link>
+              </Menu.Item>
+            )}
             <Menu.Item>
               <p
                 onClick={logoutUser}

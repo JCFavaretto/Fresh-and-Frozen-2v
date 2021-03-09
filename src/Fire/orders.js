@@ -87,3 +87,141 @@ export function getOrders(id, setOrders, setLoading) {
       toast.error("Error en la base de datos. Intente mas tarde.");
     });
 }
+
+export function getDailyOrders(day, setOrders) {
+  db.collection("orders")
+    .where("deliveryDay", "==", day)
+    .where("entregado", "==", false)
+    .where("onTheWay", "==", false)
+    .where("cancelada", "==", false)
+    .orderBy("date", "asc")
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
+    })
+    .then((res) => {
+      setOrders(res);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}
+
+export function getOnTheWayOrders(day, setOntheWayOrders) {
+  db.collection("orders")
+    .where("deliveryDay", "==", day)
+    .where("onTheWay", "==", true)
+    .orderBy("date", "asc")
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
+    })
+    .then((res) => {
+      setOntheWayOrders(res);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}
+
+export function getDeliveredOrders(day, setOntheWayOrders) {
+  db.collection("orders")
+    .where("deliveryDay", "==", day)
+    .where("entregado", "==", true)
+    .orderBy("date", "asc")
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
+    })
+    .then((res) => {
+      setOntheWayOrders(res);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}
+
+export function getCanceledOrders(day, setOrders) {
+  db.collection("orders")
+    .where("deliveryDay", "==", day)
+    .where("cancelada", "==", true)
+    .orderBy("date", "asc")
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
+    })
+    .then((res) => {
+      setOrders(res);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}
+
+export function onTheWayOrder(order, setReloadOrders) {
+  db.collection("orders")
+    .doc(order.id)
+    .set({ ...order, onTheWay: true, cancelada: false })
+    .then(() => {
+      toast.success("Orden actualizada.");
+      setReloadOrders(true);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}
+
+export function deliveredOrder(order, setReloadOrders) {
+  db.collection("orders")
+    .doc(order.id)
+    .set({ ...order, onTheWay: false, entregado: true, cancelada: false })
+    .then(() => {
+      toast.success("Orden actualizada.");
+      setReloadOrders(true);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}
+
+export function cancelOrder(order, setReloadOrders) {
+  db.collection("orders")
+    .doc(order.id)
+    .set({ ...order, cancelada: true, onTheWay: false, entregado: false })
+    .then(() => {
+      toast.success("Orden cancelada.");
+      setReloadOrders(true);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}
+
+export function deleteOrder(order, setReload) {
+  db.collection("orders")
+    .doc(order.id)
+    .delete()
+    .then(() => {
+      toast.success("Orden eliminada");
+      setReload(true);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}

@@ -63,7 +63,7 @@ export function getActiveUSersFire(status, setUsers) {
         );
       }
       return querySnapshot.docs.map((doc) => {
-        return { id: doc.id, ...doc.data() };
+        return { uid: doc.id, ...doc.data() };
       });
     })
     .then((res) => {
@@ -119,30 +119,8 @@ export function googleSignIn() {
       var user = result.user;
       return user;
     })
-    .then((user) => {
-      db.collection("users")
-        .doc(user.uid)
-        .get()
-        .then((doc) => {
-          if (!doc.exists) {
-            let dname = user.displayName.split(" ");
-            let apellido = dname[dname.length - 1];
-            dname.pop();
-            db.collection("users")
-              .doc(user.uid)
-              .set({
-                name: dname.join(" "),
-                lastName: apellido,
-                email: user.email,
-                date: new Date(),
-                role: "USER_ROLE",
-                active: true,
-              });
-          }
-        })
-        .then(() => {
-          window.location.reload();
-        });
+    .then(() => {
+      window.location.reload();
     })
     .catch((err) => {
       console.log(err);

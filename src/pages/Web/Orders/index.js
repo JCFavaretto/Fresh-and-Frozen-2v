@@ -19,7 +19,7 @@ function Orders() {
     if (!isLoading && user) {
       getOrders(user.uid, setOrders, setLoading);
     }
-  }, [user]);
+  }, [user]); //eslint-disable-line
 
   return (
     <Row style={{ minHeight: "82vh" }}>

@@ -19,6 +19,7 @@ function Products() {
 
   return (
     <div className="menu-productos">
+      <h1 className="menu-productos__titulo">Menu Productos</h1>
       <ListProducts
         productsActive={productsActive}
         productsInactive={productsInactive}

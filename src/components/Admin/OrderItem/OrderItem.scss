@@ -1,0 +1,52 @@
+@import "scss";
+
+.order-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid $background-secondary;
+  color: $primary-color;
+  padding: 1rem 2rem;
+  background-color: $background-light;
+
+  &__datos {
+    display: flex;
+    justify-content: space-evenly;
+    line-height: 1.5rem;
+
+    @media (max-width: 700px) {
+      flex-direction: column;
+    }
+
+    span {
+      color: $background-secondary;
+    }
+
+    &-comprador-piso {
+      display: flex;
+
+      div {
+        margin-right: 1rem;
+      }
+      @media (min-width: 380px) {
+        flex-direction: column;
+      }
+    }
+
+    &-pedido-lista {
+      padding-left: 20px;
+    }
+  }
+
+  &__botonera {
+    flex: 0 0 calc(40%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    button {
+      margin-top: 1rem;
+    }
+  }
+}

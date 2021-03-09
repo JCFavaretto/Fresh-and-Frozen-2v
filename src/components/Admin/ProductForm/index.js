@@ -109,7 +109,10 @@ function ProductDataForm({ productData, setProductData, handleSubmit }) {
               placeholder="Precio"
               value={productData.precio}
               onChange={(e) =>
-                setProductData({ ...productData, precio: e.target.value })
+                setProductData({
+                  ...productData,
+                  precio: Number(e.target.value),
+                })
               }
             />
           </Form.Item>
@@ -124,7 +127,10 @@ function ProductDataForm({ productData, setProductData, handleSubmit }) {
               placeholder="Stock"
               value={productData.stock}
               onChange={(e) =>
-                setProductData({ ...productData, stock: e.target.value })
+                setProductData({
+                  ...productData,
+                  stock: Number(e.target.value),
+                })
               }
             />
           </Form.Item>

@@ -21,7 +21,24 @@ export default function AuthProvider(props) {
           .get()
           .then((doc) => {
             if (!doc.exists) {
-              toast.error("No se inicio sesión correctamente.");
+              if (authUser.providerData[0].providerId === "google.com") {
+                let dname = authUser.providerData[0].displayName.split(" ");
+                let apellido = dname[dname.length - 1];
+                dname.pop();
+                db.collection("users")
+                  .doc(uid)
+                  .set({
+                    name: dname.join(" "),
+                    lastName: apellido,
+                    email: authUser.providerData[0].email,
+                    date: new Date(),
+                    role: "USER_ROLE",
+                    active: true,
+                  })
+                  .then(() => {
+                    window.location.reload();
+                  });
+              } else toast.error("No se inicio sesión correctamente.");
             }
             setUser({ user: { uid, ...doc.data() }, isLoading: false });
           })

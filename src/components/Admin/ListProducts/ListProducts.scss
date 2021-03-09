@@ -2,55 +2,45 @@
 
 @import "scss";
 
-.list-products{
+.list-products {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
 
-    &__header{
-        display: flex;
-        align-items: center;    
-        justify-content: space-between;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
+    &-switch {
+      display: flex;
+      align-items: center;
 
-        &-switch{
-            display: flex;
-            align-items: center;
-        
-            > button{
-                margin-right: 0.5rem;
-            }
-    
-        }
+      > button {
+        margin-right: 0.5rem;
+      }
     }
+  }
 
- 
+  .products-active {
+    background-color: $background-light;
+    padding: 1rem 2rem;
 
-    .products-active{
-        background-color: $background-light;
-        padding: 1rem 2rem;
-
-
-        .ant-list-item-meta{
-            display: flex;
-            align-items: center;
-            // margin-right: 8rem;
-            margin-bottom: 1rem;
-
-        }
-
+    .ant-list-item-meta {
+      display: flex;
+      align-items: center;
+      // margin-right: 8rem;
+      margin-bottom: 1rem;
     }
+  }
 
-    .products-inactive{
-        background-color: $background-light;
-        padding: 1rem 2rem;
+  .products-inactive {
+    background-color: $background-light;
+    padding: 1rem 2rem;
 
-
-        .ant-list-item-meta{
-            display: flex;
-            align-items: center;
-            margin-right: 2rem;
-            margin-bottom: 1rem;
-
-        }
+    .ant-list-item-meta {
+      display: flex;
+      align-items: center;
+      margin-right: 2rem;
+      margin-bottom: 1rem;
     }
-
-} 
+  }
+}

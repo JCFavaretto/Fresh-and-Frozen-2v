@@ -1,0 +1,29 @@
+@import "scss";
+
+.list-orders {
+  &__titulo {
+    font-size: 1.5rem;
+    text-align: center;
+    color: $primary-color-hover;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+
+    .ant-select {
+      display: flex;
+      align-items: center;
+      color: $primary-color;
+      width: 50vw;
+      text-align: center;
+
+      > button {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

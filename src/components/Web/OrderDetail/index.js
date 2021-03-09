@@ -32,7 +32,15 @@ function OrderDetail({ order }) {
         </li>
         <li className="order-detail__dato">
           <p>Estado: </p>
-          <span>{order.entregado ? "Entregado" : "Pendiente"}</span>
+          <span>
+            {order.cancelada
+              ? "Cancelado"
+              : order.onTheWay
+              ? "En Camino"
+              : order.entregado
+              ? "Entregado"
+              : "Pendiente"}
+          </span>
         </li>
       </ul>
     </div>

@@ -60,6 +60,7 @@ export function borrarProductoApiFire(name, id, setReloadProducts) {
 export function getProductsFire(setProductos) {
   db.collection("items")
     .where("active", "==", true)
+    .where("stock", ">", 0)
     .get()
     .then((querySnapshot) => {
       if (querySnapshot.size === 0) {
@@ -86,6 +87,7 @@ export function getOnSaleProductsFire(setProductos) {
   db.collection("items")
     .where("active", "==", true)
     .where("onSale", "==", true)
+    .where("stock", ">", 0)
     .get()
     .then((querySnapshot) => {
       if (querySnapshot.size === 0) {
@@ -112,6 +114,7 @@ export function getCategoryProductsFire(category, setProductos) {
   db.collection("items")
     .where("active", "==", true)
     .where("cat", "==", category)
+    .where("stock", ">", 0)
     .get()
     .then((querySnapshot) => {
       if (querySnapshot.size === 0) {
