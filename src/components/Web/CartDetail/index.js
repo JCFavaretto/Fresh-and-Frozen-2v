@@ -55,7 +55,7 @@ function CartDetail({ footer, cart, removeFromCart, totalGasto }) {
       precio: `$${item.precio}`,
       cantidad: `${item.cantidad} kg.`,
       key: item.id,
-      action: () => removeFromCart(item._id),
+      action: () => removeFromCart(item.id),
     };
   });
 
@@ -65,6 +65,7 @@ function CartDetail({ footer, cart, removeFromCart, totalGasto }) {
       precio: `$${item.precio}`,
       cantidad: `${item.cantidad} kg.`,
       key: item.id,
+      action: () => removeFromCart(item.id),
     };
   });
 
