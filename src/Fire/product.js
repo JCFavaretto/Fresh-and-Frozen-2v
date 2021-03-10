@@ -53,7 +53,7 @@ export function borrarProductoApiFire(name, id, setReloadProducts) {
     })
     .catch((err) => {
       console.log(err);
-      toast.error("Problema al eliminar el producto. Intente mas tarde.");
+      toast.error("Problema al eliminar el producto. Intenté mas tarde.");
     });
 }
 

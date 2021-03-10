@@ -1,0 +1,18 @@
+@import "scss";
+
+.posts-list {
+  margin-top: 1rem;
+  background-color: $background-light;
+  padding: 1rem 2rem;
+
+  .ant-list-item {
+    text-align: center;
+    color: $primary-color-hover;
+    font-size: 1.2rem;
+    display: block;
+
+    @media (min-width: 767px) {
+      display: flex;
+    }
+  }
+}

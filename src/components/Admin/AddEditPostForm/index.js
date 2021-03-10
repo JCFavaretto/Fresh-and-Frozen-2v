@@ -3,10 +3,11 @@ import { Row, Col, Form, Input, Button, DatePicker, Spin } from "antd";
 import { Editor } from "@tinymce/tinymce-react";
 import moment from "moment";
 import { FontSizeOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
+
+import { addNewPostFire, updatePostFire } from "Fire/blog";
 
 import "components/Admin/AddEditPostForm/AddEditPostForm.scss";
-import { toast } from "react-toastify";
-import { addNewPost } from "Fire/blog";
 
 function AddEditPostForm({ setIsVisible, setReloadPost, post }) {
   const [postData, setPostData] = useState({});
@@ -22,7 +23,7 @@ function AddEditPostForm({ setIsVisible, setReloadPost, post }) {
 
   function onSubmit(e) {
     e.preventDefault();
-    if (!postData.tittle) {
+    if (!postData.title) {
       toast.warn("El titulo es obligatorio.");
     } else if (!postData.date) {
       toast.warn("La fecha es obligatoria");
@@ -30,10 +31,18 @@ function AddEditPostForm({ setIsVisible, setReloadPost, post }) {
       toast.warn("El posteo esta vacio.");
     } else {
       setLoading(true);
-      addNewPost(postData, setReloadPost, setIsVisible, setLoading);
+      if (post) {
+        updatePostFire(postData, setReloadPost, setIsVisible, setLoading);
+      } else {
+        addNewPostFire(
+          postData,
+          setReloadPost,
+          setIsVisible,
+          setLoading,
+          setPostData
+        );
+      }
     }
-
-    console.log(postData);
   }
   const handleEditorChange = (content, editor) => {
     setPostData({ ...postData, description: content });
@@ -51,9 +60,9 @@ function AddEditPostForm({ setIsVisible, setReloadPost, post }) {
             <Input
               prefix={<FontSizeOutlined />}
               placeholder="Titulo"
-              value={postData.tittle}
+              value={postData.title}
               onChange={(e) =>
-                setPostData({ ...postData, tittle: e.target.value })
+                setPostData({ ...postData, title: e.target.value })
               }
             />
           </div>
@@ -75,7 +84,7 @@ function AddEditPostForm({ setIsVisible, setReloadPost, post }) {
           </div>
         </div>
         <Editor
-          initialValue={postData.description ? postData.description : ""}
+          value={post ? postData.description : ""}
           init={{
             height: 400,
             menubar: true,

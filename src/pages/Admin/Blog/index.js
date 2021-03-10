@@ -6,14 +6,24 @@ import { withRouter } from "react-router-dom";
 import Modal from "components/Modal";
 import AddEditPostForm from "components/Admin/AddEditPostForm";
 
+import { getPostsFire } from "Fire/blog";
+
 import "pages/Admin/Blog/Blog.scss";
+import ListPosts from "components/Admin/ListPosts";
 
 function Blog() {
   const [posts, setPosts] = useState(null);
   const [reloadPosts, setReloadPosts] = useState(false);
-  const [isVisibleModal, setIsVisibleModal] = useState(true);
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState(null);
+
+  useEffect(() => {
+    getPostsFire(setPosts);
+    if (reloadPosts === true) {
+      setReloadPosts(false);
+    }
+  }, [reloadPosts]);
 
   function addPost() {
     setIsVisibleModal(true);
@@ -26,6 +36,21 @@ function Blog() {
       />
     );
   }
+  function editPost(post) {
+    setIsVisibleModal(true);
+    setModalTitle("Editando post");
+    setModalContent(
+      <AddEditPostForm
+        setIsVisible={setIsVisibleModal}
+        setReloadPost={setReloadPosts}
+        post={post}
+      />
+    );
+  }
+
+  if (!posts) {
+    return null;
+  }
 
   return (
     <div className="blog">
@@ -35,6 +60,11 @@ function Blog() {
           <DiffOutlined style={{ fontSize: "1.3rem" }} />
         </Button>
       </div>
+      <ListPosts
+        posts={posts}
+        setReloadPosts={setReloadPosts}
+        editPost={editPost}
+      />
 
       <Modal
         title={modalTitle}
