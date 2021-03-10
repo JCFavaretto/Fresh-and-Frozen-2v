@@ -1,40 +1,37 @@
 @import "scss";
 
-.list-users{
+.list-users {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
 
-    &__header{
-        display: flex;
-        align-items: center;    
-        justify-content: space-between;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
+    &-switch {
+      display: flex;
+      align-items: center;
 
-        &-switch{
-            display: flex;
-            align-items: center;
-        
-            > button{
-                margin-right: 0.5rem;
-            }
-    
-        }
+      > button {
+        margin-right: 0.5rem;
+      }
     }
+  }
 
- 
+  .users-active {
+    background-color: $background-light;
+    padding: 1rem 2rem;
 
-    .users-active{
-        background-color: $background-light;
-        padding: 1rem 2rem;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    margin-bottom: 1rem;
 
-
-        .ant-list-item-meta{
-            display: flex;
-            align-items: center;
-            margin-right: 8rem;
-            margin-bottom: 1rem;
-
-        }
-
+    .ant-list-item-meta {
+      display: flex;
+      align-items: center;
+      margin-right: 8rem;
+      margin-bottom: 1rem;
     }
-
-} 
+  }
+}

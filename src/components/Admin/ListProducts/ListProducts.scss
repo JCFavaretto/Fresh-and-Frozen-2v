@@ -23,7 +23,10 @@
   .products-active {
     background-color: $background-light;
     padding: 1rem 2rem;
-
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    margin-bottom: 1rem;
     .ant-list-item-meta {
       display: flex;
       align-items: center;
@@ -35,6 +38,10 @@
   .products-inactive {
     background-color: $background-light;
     padding: 1rem 2rem;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    margin-bottom: 1rem;
 
     .ant-list-item-meta {
       display: flex;

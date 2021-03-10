@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button, notification } from "antd";
+import { Button } from "antd";
 import { DiffOutlined } from "@ant-design/icons";
-import { withRouter } from "react-router-dom";
 
 import Modal from "components/Modal";
 import AddEditPostForm from "components/Admin/AddEditPostForm";
@@ -53,8 +52,8 @@ function Blog() {
   }
 
   return (
-    <div className="blog">
-      <h1 className="blog__titulo">Blogs</h1>
+    <div className="blog__admin">
+      <h1 className="blog__admin-titulo">Blogs</h1>
       <div className="blog__add-post">
         <Button type="primary" onClick={addPost}>
           <DiffOutlined style={{ fontSize: "1.3rem" }} />

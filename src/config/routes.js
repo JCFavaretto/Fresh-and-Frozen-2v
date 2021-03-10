@@ -19,6 +19,7 @@ import Products from "pages/Web/Products";
 import User from "pages/Web/User";
 import Buy from "pages/Web/Buy";
 import Orders from "pages/Web/Orders";
+import Blog from "pages/Web/Blog";
 
 const routes = [
   {
@@ -104,6 +105,16 @@ const routes = [
       {
         path: "/comprar",
         component: Buy,
+        exact: true,
+      },
+      {
+        path: "/blog",
+        component: Blog,
+        exact: true,
+      },
+      {
+        path: "/blog/:id",
+        component: Blog,
         exact: true,
       },
       {

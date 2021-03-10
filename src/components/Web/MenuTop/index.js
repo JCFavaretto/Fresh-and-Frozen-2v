@@ -63,6 +63,9 @@ function MenuTop() {
             <Link to="/productos/rebozados">Rebozados</Link>
           </Menu.Item>
         </Menu.SubMenu>
+        <Menu.Item className="menu-top-web__item">
+          <Link to="/blog">Blog</Link>
+        </Menu.Item>
         {isUser ? (
           <Menu.SubMenu className="menu-top-web__item" title={user.name}>
             <Menu.Item>
@@ -139,6 +142,9 @@ function MenuTop() {
             <Link to="/productos/rebozados">Rebozados</Link>
           </Menu.Item>
         </Menu.SubMenu>
+        <Menu.Item className="menu-expandible__item">
+          <Link to="/blog">Blog</Link>
+        </Menu.Item>
         {isUser ? (
           <Menu.SubMenu className="menu-expandible__item" title={user.name}>
             <Menu.Item>

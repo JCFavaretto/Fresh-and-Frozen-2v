@@ -1,0 +1,10 @@
+@import "scss";
+
+.post-info {
+  &__creation-date {
+    text-align: right;
+    font-size: 0.8rem;
+    margin: 0.3rem auto 1rem auto;
+    color: $primary-color-hover;
+  }
+}
