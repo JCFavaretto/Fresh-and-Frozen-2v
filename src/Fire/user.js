@@ -89,7 +89,13 @@ export function changeUserStatusFire(status, user, setReloadUsers) {
     });
 }
 
-export function updateUserFire(data, user, setEdit, setReloadUsers) {
+export function updateUserFire(
+  data,
+  user,
+  setEdit,
+  setReloadUsers,
+  setLoading
+) {
   db.collection("users")
     .doc(user.uid)
     .set({
@@ -102,10 +108,16 @@ export function updateUserFire(data, user, setEdit, setReloadUsers) {
         setEdit(false);
         setReloadUsers(true);
       }
+      console.log(setLoading);
+      if (setLoading) {
+        setLoading(false);
+      }
     })
     .catch((err) => {
-      console.log(err);
       toast.error("El usuario no se actualizo correctamente.");
+      if (setLoading) {
+        setLoading(false);
+      }
     });
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Select, Button, Row, Col } from "antd";
+import { Form, Input, Select, Button, Row, Col, Spin } from "antd";
 import { MailOutlined, UserOutlined } from "@ant-design/icons";
 
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ import { updateUserFire } from "Fire/user";
 import "components/Admin/EditUserForm/EditUserForm.scss";
 
 function EditUserForm({ user, setEdit, setReloadUsers }) {
+  const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({
     name: user.name,
     lastName: user.lastName,
@@ -22,7 +23,8 @@ function EditUserForm({ user, setEdit, setReloadUsers }) {
       toast.error("El nombre, apellido e email son obligatorios ");
       return;
     }
-    updateUserFire(userData, user, setEdit, setReloadUsers);
+    setLoading(true);
+    updateUserFire(userData, user, setEdit, setReloadUsers, setLoading);
   }
 
   useEffect(() => {
@@ -40,12 +42,13 @@ function EditUserForm({ user, setEdit, setReloadUsers }) {
         userData={userData}
         setUserData={setUserData}
         updateUser={handleSubmit}
+        loading={loading}
       />
     </div>
   );
 }
 
-function EditForm({ userData, setUserData, updateUser }) {
+function EditForm({ userData, setUserData, updateUser, loading }) {
   const { Option } = Select;
 
   return (
@@ -106,8 +109,13 @@ function EditForm({ userData, setUserData, updateUser }) {
         </Col>
       </Row>
 
-      <Button type="primary" htmlType="submit" className="btn-submit">
-        Actualizar Usuario
+      <Button
+        type="primary"
+        htmlType="submit"
+        className="btn-submit"
+        disabled={loading}
+      >
+        {loading ? <Spin /> : "Actualizar Usuario"}
       </Button>
     </Form>
   );

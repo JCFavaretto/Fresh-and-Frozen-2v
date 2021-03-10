@@ -1,7 +1,12 @@
 import { firebase, db } from "Fire";
 import { toast } from "react-toastify";
 
-export async function setBuyOrderFire(order, setCart, emptyStorage) {
+export async function setBuyOrderFire(
+  order,
+  setCart,
+  emptyStorage,
+  setLoading
+) {
   let ok = await updateStock(order.cart);
   if (ok) {
     db.collection("orders")
@@ -11,14 +16,17 @@ export async function setBuyOrderFire(order, setCart, emptyStorage) {
         toast.success("Compra exitosa!");
         setCart([]);
         emptyStorage();
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
         toast.error("Error en la base de datos. Intente mas tarde.");
       });
   } else {
     toast.error("No hay stock del producto.");
     setCart([]);
+    setLoading(false);
     emptyStorage();
   }
 }

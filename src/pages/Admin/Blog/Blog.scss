@@ -1,0 +1,16 @@
+@import "scss";
+
+.blog {
+  &__titulo {
+    font-size: 1.5rem;
+    text-align: center;
+    color: $primary-color-hover;
+  }
+
+  &__add-post {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 2rem;
+  }
+}

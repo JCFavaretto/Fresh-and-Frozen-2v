@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal as ModalAnt } from "antd";
 
-function Modal({ children, title, isVisible, setIsVisible }) {
+function Modal({ children, title, isVisible, setIsVisible, ...other }) {
   return (
     <ModalAnt
       title={title}
@@ -11,6 +11,7 @@ function Modal({ children, title, isVisible, setIsVisible }) {
         setIsVisible(false);
       }}
       footer={false}
+      {...other}
     >
       {children}
     </ModalAnt>

@@ -5,6 +5,7 @@ import {
   DollarCircleOutlined,
   ShoppingCartOutlined,
   UserOutlined,
+  SnippetsOutlined,
 } from "@ant-design/icons";
 
 import "components/Admin/MenuSider/MenuSider.scss";
@@ -35,6 +36,12 @@ function MenuSider({ menuCollapsed, location }) {
           <Link to={"/admin/orders"}>
             <DollarCircleOutlined />
             <span className="nav-text">Ordenes de Compra</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="/admin/blog">
+          <Link to={"/admin/blog"}>
+            <SnippetsOutlined />
+            <span className="nav-text">Blog</span>
           </Link>
         </Menu.Item>
       </Menu>

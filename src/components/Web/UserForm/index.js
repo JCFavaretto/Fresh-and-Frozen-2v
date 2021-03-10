@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Input, Row, Form } from "antd";
+import { Button, Col, Input, Row, Form, Spin } from "antd";
 import { MailOutlined, UserOutlined } from "@ant-design/icons";
 
 import { toast } from "react-toastify";
@@ -10,6 +10,7 @@ import "components/Web/UserForm/UserForm.scss";
 
 function UserForm({ user }) {
   const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,8 +28,8 @@ function UserForm({ user }) {
       toast.error("El nombre, apellido e email son obligatorios ");
       return;
     }
-
-    updateUserFire(updateUser, user);
+    setLoading(true);
+    updateUserFire(updateUser, user, null, null, setLoading);
   }
 
   useEffect(() => {
@@ -45,12 +46,13 @@ function UserForm({ user }) {
         userData={userData}
         setUserData={setUserData}
         updateUser={handleSubmit}
+        loading={loading}
       />
     </div>
   );
 }
 
-function DaForm({ userData, setUserData, updateUser }) {
+function DaForm({ userData, setUserData, updateUser, loading }) {
   return (
     <Form className="form-edit" onSubmitCapture={updateUser}>
       <Row gutter={24}>
@@ -97,8 +99,13 @@ function DaForm({ userData, setUserData, updateUser }) {
         </Col>
       </Row>
 
-      <Button type="primary" htmlType="submit" className="btn-submit">
-        Actualizar datos
+      <Button
+        type="primary"
+        htmlType="submit"
+        className="btn-submit"
+        disabled={loading}
+      >
+        {loading ? <Spin /> : "Actualizar datos"}
       </Button>
     </Form>
   );

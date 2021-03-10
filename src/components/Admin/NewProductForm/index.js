@@ -1,5 +1,15 @@
 import React, { useCallback, useState } from "react";
-import { Avatar, Form, Input, Select, Button, Row, Col, Checkbox } from "antd";
+import {
+  Avatar,
+  Form,
+  Input,
+  Select,
+  Button,
+  Row,
+  Col,
+  Checkbox,
+  Spin,
+} from "antd";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 
@@ -20,6 +30,7 @@ function NewProductForm({ setModalVisible, setReloadProducts }) {
   };
   const [img, setImg] = useState(null);
   const [productData, setProductData] = useState(initialState);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -44,7 +55,7 @@ function NewProductForm({ setModalVisible, setReloadProducts }) {
     }
 
     let uploadProducto = productData;
-
+    setLoading(true);
     uploadImgProductFire(
       uploadProducto,
       img,
@@ -52,7 +63,8 @@ function NewProductForm({ setModalVisible, setReloadProducts }) {
       setReloadProducts,
       setProductData,
       initialState,
-      setModalVisible
+      setModalVisible,
+      setLoading
     );
   }
 
@@ -63,6 +75,7 @@ function NewProductForm({ setModalVisible, setReloadProducts }) {
         productData={productData}
         setProductData={setProductData}
         handleSubmit={handleSubmit}
+        loading={loading}
       />
     </div>
   );
@@ -98,7 +111,12 @@ function UploadImg({ img, setImg }) {
   );
 }
 
-function ProductDataForm({ productData, setProductData, handleSubmit }) {
+function ProductDataForm({
+  productData,
+  setProductData,
+  handleSubmit,
+  loading,
+}) {
   const { Option } = Select;
   const { TextArea } = Input;
 
@@ -197,8 +215,13 @@ function ProductDataForm({ productData, setProductData, handleSubmit }) {
           </Checkbox>
         </Col>
       </Row>
-      <Button type="primary" htmlType="submit" className="btn-submit">
-        Crear producto
+      <Button
+        type="primary"
+        htmlType="submit"
+        className="btn-submit"
+        disabled={loading}
+      >
+        {loading ? <Spin /> : "Crear producto"}
       </Button>
     </Form>
   );

@@ -144,7 +144,8 @@ export function uploadImgProductFire(
   setReloadProducts,
   setProductData,
   initialState,
-  setModalVisible
+  setModalVisible,
+  setLoading
 ) {
   const uploadTask = storage.ref(`images/${data.nombre}`).put(img);
   uploadTask.on(
@@ -166,7 +167,8 @@ export function uploadImgProductFire(
             setReloadProducts,
             setProductData,
             initialState,
-            setModalVisible
+            setModalVisible,
+            setLoading
           );
         })
         .catch((err) => {
@@ -174,12 +176,19 @@ export function uploadImgProductFire(
           toast.error(
             "No se actualizo la imagen correctamente. Intente mas tarde."
           );
+          setLoading(false);
         });
     }
   );
 }
 
-export function updateImgProductFire(data, img, setModal, setReload) {
+export function updateImgProductFire(
+  data,
+  img,
+  setModal,
+  setReload,
+  setLoading
+) {
   const uploadTask = storage.ref(`images/${data.nombre}`).put(img);
   uploadTask.on(
     "state_changed",
@@ -194,10 +203,11 @@ export function updateImgProductFire(data, img, setModal, setReload) {
         .getDownloadURL()
         .then((url) => {
           data.img = url;
-          updateProductFire(data, setModal, setReload);
+          updateProductFire(data, setModal, setReload, setLoading);
         })
         .catch((err) => {
           console.log(err);
+          setLoading(false);
           toast.error(
             "No se actualizo la imagen correctamente. Intente mas tarde."
           );
@@ -206,7 +216,7 @@ export function updateImgProductFire(data, img, setModal, setReload) {
   );
 }
 
-export function updateProductFire(data, setModal, setReload) {
+export function updateProductFire(data, setModal, setReload, setLoading) {
   db.collection("items")
     .doc(data.id)
     .update(data)
@@ -214,8 +224,11 @@ export function updateProductFire(data, setModal, setReload) {
       toast.success("Producto actualizado correctamente.");
       setModal(false);
       setReload(true);
+      setLoading(false);
     })
     .catch((err) => {
+      console.log(err);
+      setLoading(false);
       toast.error("Problema actualizando el producto. Intente mas tarde.");
     });
 }
@@ -226,7 +239,8 @@ function setProductFire(
   setReloadProducts,
   setProductData,
   initialState,
-  setModalVisible
+  setModalVisible,
+  setLoading
 ) {
   db.collection("items")
     .doc()
@@ -238,9 +252,11 @@ function setProductFire(
       setReloadProducts(true);
       setProductData(initialState);
       setModalVisible(false);
+      setLoading(false);
     })
     .catch((err) => {
       console.log(err);
+      setLoading(false);
       toast.error("Error guardando el producto. Intente mas tarde.");
     });
 }

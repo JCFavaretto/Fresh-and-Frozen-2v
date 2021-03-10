@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Form, Input, Row, Col, Button, Checkbox, Select } from "antd";
+import { Form, Input, Row, Col, Button, Checkbox, Select, Spin } from "antd";
 import { useHistory } from "react-router";
 
 import { firebase } from "Fire";
@@ -24,7 +24,7 @@ function BuyAddressForm() {
   });
   const [deliveryDay, setDeliveryDay] = useState(null);
   const [save, setSave] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const [{ cart, setCart, emptyStorage, totalGasto }] = useContext(Carrito);
 
@@ -41,6 +41,7 @@ function BuyAddressForm() {
     } else if (!deliveryDay) {
       toast.error("Seleccione dia de entrega.");
     } else {
+      setLoading(true);
       const order = {
         comprador: user.uid,
         nombre: user.name + " " + user.lastName,
@@ -60,7 +61,7 @@ function BuyAddressForm() {
       if (save) {
         updateUserFire(direccion, user);
       }
-      setBuyOrderFire(order, setCart, emptyStorage);
+      setBuyOrderFire(order, setCart, emptyStorage, setLoading);
     }
   }
 
@@ -179,8 +180,8 @@ function BuyAddressForm() {
       </Row>
       <Form.Item>
         <div className="address-form__btn-comprar">
-          <Button type="primary" htmlType="submit">
-            Comprar
+          <Button type="primary" htmlType="submit" disabled={loading}>
+            {loading ? <Spin /> : "Comprar"}
           </Button>
         </div>
       </Form.Item>

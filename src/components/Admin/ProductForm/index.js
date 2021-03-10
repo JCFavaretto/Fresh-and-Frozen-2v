@@ -1,5 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Avatar, Form, Input, Select, Button, Row, Col, Checkbox } from "antd";
+import {
+  Avatar,
+  Form,
+  Input,
+  Select,
+  Button,
+  Row,
+  Col,
+  Checkbox,
+  Spin,
+} from "antd";
 import { useDropzone } from "react-dropzone";
 import noAvatar from "assets/img/no-avatar.png";
 
@@ -10,6 +20,7 @@ import "components/Admin/ProductForm/ProductForm.scss";
 function ProductForm({ producto, setModalVisible, setReloadProducts }) {
   const [img, setImg] = useState(null);
   const [productData, setProductData] = useState(producto);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setProductData(producto);
@@ -19,15 +30,22 @@ function ProductForm({ producto, setModalVisible, setReloadProducts }) {
   async function handleSubmit(e) {
     e.preventDefault();
     let uploadProducto = productData;
+    setLoading(true);
     if (typeof img === "object") {
       updateImgProductFire(
         uploadProducto,
         img,
         setModalVisible,
-        setReloadProducts
+        setReloadProducts,
+        setLoading
       );
     } else {
-      updateProductFire(uploadProducto, setModalVisible, setReloadProducts);
+      updateProductFire(
+        uploadProducto,
+        setModalVisible,
+        setReloadProducts,
+        setLoading
+      );
     }
   }
 
@@ -38,6 +56,7 @@ function ProductForm({ producto, setModalVisible, setReloadProducts }) {
         productData={productData}
         setProductData={setProductData}
         handleSubmit={handleSubmit}
+        loading={loading}
       />
     </div>
   );
@@ -81,7 +100,12 @@ function UploadImg({ img, setImg }) {
   );
 }
 
-function ProductDataForm({ productData, setProductData, handleSubmit }) {
+function ProductDataForm({
+  productData,
+  setProductData,
+  handleSubmit,
+  loading,
+}) {
   const { Option } = Select;
   const { TextArea } = Input;
 
@@ -180,8 +204,13 @@ function ProductDataForm({ productData, setProductData, handleSubmit }) {
           </Checkbox>
         </Col>
       </Row>
-      <Button type="primary" htmlType="submit" className="btn-submit">
-        Actualizar producto
+      <Button
+        type="primary"
+        htmlType="submit"
+        className="btn-submit"
+        disabled={loading}
+      >
+        {loading ? <Spin /> : "Actualizar producto"}
       </Button>
     </Form>
   );

@@ -8,6 +8,7 @@ import AdminUser from "pages/Admin/User";
 import AdminError404 from "pages/Admin/Error404";
 import AdminProducts from "pages/Admin/Products";
 import AdminOrders from "pages/Admin/Orders";
+import AdminBlog from "pages/Admin/Blog";
 
 //Pages
 import Home from "pages/Web/Home";
@@ -48,6 +49,11 @@ const routes = [
       {
         path: "/admin/orders",
         component: AdminOrders,
+        exact: true,
+      },
+      {
+        path: "/admin/blog",
+        component: AdminBlog,
         exact: true,
       },
       {
