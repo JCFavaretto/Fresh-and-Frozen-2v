@@ -7,4 +7,11 @@
     margin: 0.3rem auto 1rem auto;
     color: $primary-color-hover;
   }
+
+  &__description {
+    img {
+      max-width: 80%;
+      object-fit: contain;
+    }
+  }
 }

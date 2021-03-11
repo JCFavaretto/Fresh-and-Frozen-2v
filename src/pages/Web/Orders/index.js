@@ -14,12 +14,16 @@ function Orders() {
   const [orders, setOrders] = useState([]);
   const [order, setOrder] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [reloadOrders, setReloadOrders] = useState(false);
 
   useEffect(() => {
     if (!isLoading && user) {
       getOrders(user.uid, setOrders, setLoading);
+      if (reloadOrders) {
+        setReloadOrders(false);
+      }
     }
-  }, [user]); //eslint-disable-line
+  }, [user, reloadOrders]); //eslint-disable-line
 
   return (
     <Row style={{ minHeight: "82vh" }}>
@@ -36,7 +40,10 @@ function Orders() {
                     order={order}
                     setOrder={setOrder}
                   />
-                  <OrderDetail order={orders[order]} />
+                  <OrderDetail
+                    order={orders[order]}
+                    setReloadOrders={setReloadOrders}
+                  />
                 </>
               ) : (
                 <h3>No tiene compras</h3>

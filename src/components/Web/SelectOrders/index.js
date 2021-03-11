@@ -20,7 +20,7 @@ function SelectOrders({ orders, order, setOrder }) {
               <Option key={item.id} value={i}>
                 {item.date.toDate().getDate() +
                   "/" +
-                  item.date.toDate().getMonth() +
+                  (item.date.toDate().getMonth() + 1) +
                   "/" +
                   item.date.toDate().getFullYear() +
                   " - " +

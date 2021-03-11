@@ -27,6 +27,7 @@ export function addNewPostFire(
 
 export function getPostsFire(setPost) {
   db.collection("blog")
+    .orderBy("date", "desc")
     .get()
     .then((querySnapshot) => {
       return querySnapshot.docs.map((doc) => {

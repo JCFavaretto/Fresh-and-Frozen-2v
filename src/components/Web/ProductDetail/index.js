@@ -34,7 +34,7 @@ function ProductDetail({ producto, setModalVisible }) {
       </div>
       <div className="detalle-producto__footer">
         <ItemCount count={count} setCount={setCount} max={producto.stock} />
-        <Button type="primary" onClick={agregarAlCarro}>
+        <Button type="primary" onClick={agregarAlCarro} disabled={count === 0}>
           Agregar al Carrito{" "}
         </Button>
       </div>

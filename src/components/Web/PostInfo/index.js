@@ -11,13 +11,13 @@ function PostInfo({ post }) {
 
   return (
     <div className="post-info">
-      <div className="post-info__creation-date">
-        Fecha de publicación: {moment(post.date).locale("es").format("LL")}
-      </div>
       <div
         className="post-info__description"
         dangerouslySetInnerHTML={{ __html: post.description }}
       />
+      <div className="post-info__creation-date">
+        Fecha de publicación: {moment(post.date).locale("es").format("LL")}
+      </div>
     </div>
   );
 }

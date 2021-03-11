@@ -65,7 +65,7 @@
       padding: 0.5rem 1rem !important;
       display: none !important;
 
-      @media (min-width: 768px) {
+      @media (min-width: 850px) {
         display: flex !important;
       }
     }
@@ -93,13 +93,13 @@
           font-size: 1.5rem !important;
           margin: 0 auto !important;
 
-          @media (min-width: 768px) {
+          @media (min-width: 850px) {
             font-size: 1.8rem !important;
           }
         }
       }
       &-btn-menu {
-        @media (min-width: 768px) {
+        @media (min-width: 850px) {
           display: none !important;
         }
       }
@@ -186,7 +186,7 @@
         }
       }
 
-      @media (min-width: 768px) {
+      @media (min-width: 850px) {
         display: none;
       }
     }

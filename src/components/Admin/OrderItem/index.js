@@ -34,7 +34,7 @@ export default function OrderItem({ order, setReloadOrders }) {
               {" "}
               {order.date.toDate().getDate() +
                 "/" +
-                order.date.toDate().getMonth() +
+                (order.date.toDate().getMonth() + 1) +
                 "/" +
                 order.date.toDate().getFullYear() +
                 " - " +
