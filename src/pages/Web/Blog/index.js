@@ -25,7 +25,7 @@ function Blog() {
         }
       });
     }
-  }, [posts]);
+  }, [posts, id]);
 
   return (
     <Row style={{ minHeight: "82vh" }}>
