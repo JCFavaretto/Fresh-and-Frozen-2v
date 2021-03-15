@@ -27,24 +27,20 @@ function Products() {
   }, [categoria]); //eslint-disable-line
 
   return (
-    <Row className="pagina-productos">
-      <Col xs={1} sm={2}></Col>
-      <Col xs={22} sm={20}>
-        <h1 className="pagina-productos__titulo">
-          {!categoria
-            ? "Nuestros Productos"
-            : categoria === "promociones"
-            ? "Promociones"
-            : categoria === "frescos"
-            ? "Frescos"
-            : categoria === "congelados"
-            ? "Congelados"
-            : "Rebozados"}
-        </h1>
-        <ProductList productos={productos} />
-      </Col>
-      <Col xs={1} sm={2}></Col>
-    </Row>
+    <div className="pagina-productos">
+      <h1 className="pagina-productos__titulo">
+        {!categoria
+          ? "Nuestros Productos"
+          : categoria === "promociones"
+          ? "Promociones"
+          : categoria === "frescos"
+          ? "Frescos"
+          : categoria === "congelados"
+          ? "Congelados"
+          : "Rebozados"}
+      </h1>
+      <ProductList productos={productos} />
+    </div>
   );
 }
 

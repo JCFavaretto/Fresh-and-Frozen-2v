@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Card, Button } from "antd";
+import { Col, Button } from "antd";
 
 import "components/Web/ProductCard/ProductCard.scss";
 import ProductDetail from "../ProductDetail";
@@ -21,8 +21,7 @@ function ProductCard({
   return (
     <Col
       md={10}
-      lg={8}
-      xl={6}
+      xl={8}
       style={{
         margin: "0 auto",
         display: "flex",
@@ -30,22 +29,17 @@ function ProductCard({
         alignItems: "center",
       }}
     >
-      {" "}
-      <Card
-        className="card-producto"
-        hoverable
-        onClick={productDetail}
-        cover={
-          <img
-            className="card-producto__img"
-            alt={producto.descripcion}
-            src={producto.img}
-          />
-        }
-      >
-        {producto.nombre}
-        <Button type="primary">${producto.precio}</Button>
-      </Card>
+      <div className="product-card" onClick={productDetail}>
+        <img
+          className="product-card__img"
+          alt={producto.descripcion}
+          src={producto.img}
+        />
+        <div className="product-card__data">
+          <p>{producto.nombre}</p>
+          <Button type="primary">${producto.precio}</Button>
+        </div>
+      </div>
     </Col>
   );
 }

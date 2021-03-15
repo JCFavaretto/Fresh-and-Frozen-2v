@@ -28,11 +28,17 @@ function MenuTop() {
   }, [user, isLoading]); //eslint-disable-line
 
   return (
-    <div className="menu-completo">
+    <div className="menu-completo ">
       <Menu className="menu-top-web" mode="horizontal">
         <Menu.Item className="menu-top-web__logo">
           <Link to="/">
-            <img src={logo} alt="Fresh&Frozen" width="180px" />
+            {/* <img src={logo} alt="Fresh&Frozen" width="180px" /> */}
+            <div className="menu-top-web__logo-d">
+              <h3>
+                FRESH<span>&</span>FROZEN
+              </h3>
+              <p>PESCADERIA</p>
+            </div>
           </Link>
         </Menu.Item>
         <Menu.Item className="menu-top-web__item">

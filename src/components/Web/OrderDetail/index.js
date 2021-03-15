@@ -11,9 +11,9 @@ function OrderDetail({ order, setReloadOrders }) {
   const { confirm } = Modal;
 
   function expectedDelivery() {
-    let actualDay = 5; // new Date().getDay();
+    let actualDay = new Date().getDay();
     let actualTime = new Date().getHours();
-    let date = 12; // new Date().getDate();
+    let date = new Date().getDate();
     let day = 1;
     if (order.deliveryDay === "martes") {
       day = 2;

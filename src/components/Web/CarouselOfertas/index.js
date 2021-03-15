@@ -3,42 +3,39 @@ import React, { useState } from "react";
 import ProductCard from "../ProductCard";
 import Modal from "components/Modal";
 
+import "components/Web/CarouselOfertas/CarouselOfertas.scss";
+
 function CarouselOfertas({ productos }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState(null);
+
   const settings = {
+    arrows: true,
     autoplay: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     dots: true,
     swipeToSlide: true,
     responsive: [
       {
-        breakpoint: 575,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-
-      {
-        breakpoint: 996,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 1200,
+        breakpoint: 768,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 1,
         },
       },
     ],
   };
 
   return (
-    <>
+    <div className="carousel">
       <Modal
         title={modalTitle}
         isVisible={modalVisible}
@@ -46,8 +43,8 @@ function CarouselOfertas({ productos }) {
       >
         {modalContent}
       </Modal>
-      <h1 className="pagina-productos__titulo">Las mejores ofertas!</h1>
-      <Carousel {...settings}>
+      <h1 className="carousel__titulo">Encontra las mejores ofertas!</h1>
+      <Carousel {...settings} className="carousel__actual-carousel">
         {productos.map((item) => {
           return (
             <ProductCard
@@ -60,7 +57,7 @@ function CarouselOfertas({ productos }) {
           );
         })}
       </Carousel>
-    </>
+    </div>
   );
 }
 
