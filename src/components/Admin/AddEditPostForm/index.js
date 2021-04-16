@@ -83,6 +83,7 @@ function AddEditPostForm({ setIsVisible, setReloadPost, post }) {
             />
           </div>
         </div>
+
         <Editor
           value={post ? postData.description : ""}
           init={{
