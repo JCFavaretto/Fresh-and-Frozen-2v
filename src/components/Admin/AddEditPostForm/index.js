@@ -10,7 +10,7 @@ import { addNewPostFire, updatePostFire } from "Fire/blog";
 import "components/Admin/AddEditPostForm/AddEditPostForm.scss";
 
 function AddEditPostForm({ setIsVisible, setReloadPost, post }) {
-  const [postData, setPostData] = useState({});
+  const [postData, setPostData] = useState(post);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -94,9 +94,7 @@ function AddEditPostForm({ setIsVisible, setReloadPost, post }) {
               "insertdatetime media table paste code help wordcount",
             ],
             toolbar:
-              "undo redo | formatselect | bold italic fontsizeselect forecolor backcolor | \
-             alignleft aligncenter alignright alignjustify | \
-             bullist numlist outdent indent | removeformat | help",
+              "undo redo | formatselect | bold italic fontsizeselect forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
           }}
           onEditorChange={handleEditorChange}
         />

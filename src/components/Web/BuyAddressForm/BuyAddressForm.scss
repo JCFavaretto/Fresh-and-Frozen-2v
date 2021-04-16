@@ -26,4 +26,13 @@
       font-size: 1rem;
     }
   }
+  .ant-input,
+  .ant-select-selector {
+    text-align: center;
+    color: $primary-color;
+  }
+
+  label {
+    color: $background-secondary;
+  }
 }

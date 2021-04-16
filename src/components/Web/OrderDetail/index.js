@@ -9,6 +9,7 @@ import "components/Web/OrderDetail/OrderDetail.scss";
 
 function OrderDetail({ order, setReloadOrders }) {
   const { confirm } = Modal;
+  console.log(order);
 
   function expectedDelivery() {
     let actualDay = new Date().getDay();

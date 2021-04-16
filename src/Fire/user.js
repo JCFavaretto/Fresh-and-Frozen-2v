@@ -108,7 +108,6 @@ export function updateUserFire(
         setEdit(false);
         setReloadUsers(true);
       }
-      console.log(setLoading);
       if (setLoading) {
         setLoading(false);
       }

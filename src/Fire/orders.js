@@ -1,5 +1,6 @@
 import { firebase, db } from "Fire";
 import { toast } from "react-toastify";
+import { checkOutMercadoPago } from "./mercadopago";
 
 export async function setBuyOrderFire(
   order,
@@ -7,16 +8,23 @@ export async function setBuyOrderFire(
   emptyStorage,
   setLoading
 ) {
+  console.log(order);
   let ok = await updateStock(order.cart);
   if (ok) {
     db.collection("orders")
       .doc()
       .set(order)
       .then(() => {
-        toast.success("Compra exitosa!");
-        setCart([]);
-        emptyStorage();
-        setLoading(false);
+        if (order.mercadoPago) {
+          comprarMercadopago(order.cart, order.comprador);
+        } else {
+          setCart([]);
+          emptyStorage();
+          toast.success("Compra exitosa!");
+          if (setLoading) {
+            setLoading(false);
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -75,6 +83,31 @@ async function updateStock(items) {
   return everythingIsOK;
 }
 
+async function comprarMercadopago(cart, id) {
+  const items = cart.map((item) => {
+    return {
+      title: item.nombre,
+      unit_price: Number.parseInt(item.precio * item.cantidad),
+      quantity: 1,
+      currency_id: "ARS",
+    };
+  });
+
+  db.collection("orders")
+    .where("comprador", "==", id)
+    .orderBy("date", "desc")
+    .limit(1)
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => {
+        return { id: doc.id };
+      });
+    })
+    .then((res) => {
+      checkOutMercadoPago(items, res[0].id);
+    });
+}
+
 export function getOrders(id, setOrders, setLoading) {
   setLoading(true);
   db.collection("orders")
@@ -90,6 +123,36 @@ export function getOrders(id, setOrders, setLoading) {
       setOrders(res);
       setLoading(false);
     })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}
+
+export function getLastOrder(id, setOrder) {
+  db.collection("orders")
+    .where("comprador", "==", id)
+    .orderBy("date", "desc")
+    .limit(1)
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
+    })
+    .then((res) => {
+      setOrder(res[0]);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Error en la base de datos. Intente mas tarde.");
+    });
+}
+
+export function updateMPStatus(order, payment_id, status) {
+  db.collection("orders")
+    .doc(order.id)
+    .set({ ...order, payment_id, paymentStatus: status })
     .catch((err) => {
       console.log(err);
       toast.error("Error en la base de datos. Intente mas tarde.");
@@ -206,7 +269,45 @@ export function deliveredOrder(order, setReloadOrders) {
     });
 }
 
-export function cancelOrder(order, setReloadOrders) {
+async function returnStock(items) {
+  const itemsRef = db.collection("items").where(
+    firebase.firestore.FieldPath.documentId(),
+    "in",
+    items.map((i) => i.id)
+  );
+  let query = [];
+  let itemDocs = [];
+
+  try {
+    query = await itemsRef.get();
+    let { docs } = query;
+    itemDocs = docs.map((item) => {
+      return { id: item.id, ...item.data() };
+    });
+  } catch (err) {
+    console.log(err);
+  }
+
+  itemDocs.forEach((item) => {
+    items.forEach((item2) => {
+      if (item.id === item2.id) {
+        item.stock = item.stock + item2.cantidad;
+      }
+    });
+  });
+
+  const batch = db.batch();
+  await query.docs.forEach((doc, i) => {
+    batch.update(doc.ref, {
+      stock: itemDocs[i].stock,
+    });
+  });
+  batch.commit();
+}
+
+export async function cancelOrder(order, setReloadOrders) {
+  await returnStock(order.cart);
+
   db.collection("orders")
     .doc(order.id)
     .set({ ...order, cancelada: true, onTheWay: false, entregado: false })
@@ -233,3 +334,5 @@ export function deleteOrder(order, setReload) {
       toast.error("Error en la base de datos. Intente mas tarde.");
     });
 }
+
+export function updateOrder(order) {}

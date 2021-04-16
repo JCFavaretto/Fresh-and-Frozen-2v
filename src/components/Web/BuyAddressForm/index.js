@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Form, Input, Row, Col, Button, Checkbox, Select, Spin } from "antd";
+import { Form, Input, Row, Col, Button, Select, Spin } from "antd";
 import { useHistory } from "react-router";
 
 import { firebase } from "Fire";
@@ -23,14 +23,10 @@ function BuyAddressForm() {
     telefono: "",
   });
   const [deliveryDay, setDeliveryDay] = useState(null);
-  const [save, setSave] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const [{ cart, setCart, emptyStorage, totalGasto }] = useContext(Carrito);
-
-  function saveAddressData(e) {
-    setSave(e.target.checked);
-  }
+  const [mercadoPago, setMercadoPago] = useState(false);
 
   function handleBuy(e) {
     e.preventDefault();
@@ -42,7 +38,7 @@ function BuyAddressForm() {
       toast.error("Seleccione dia de entrega.");
     } else {
       setLoading(true);
-      const order = {
+      let order = {
         comprador: user.uid,
         nombre: user.name + " " + user.lastName,
         calle: direccion.calle,
@@ -53,13 +49,14 @@ function BuyAddressForm() {
         entregado: false,
         cancelada: false,
         onTheWay: false,
+        mercadoPago,
         cart: cart,
         total: totalGasto(),
         deliveryDay,
         date: firebase.firestore.Timestamp.fromDate(new Date()),
       };
-      if (save) {
-        updateUserFire(direccion, user);
+      if (mercadoPago) {
+        order = { ...order, paymentStatus: "checkout", paymentId: "" };
       }
       setBuyOrderFire(order, setCart, emptyStorage, setLoading);
     }
@@ -154,12 +151,27 @@ function BuyAddressForm() {
             />
           </Form.Item>
         </Col>
+      </Row>{" "}
+      <Row gutter={24}>
+        <Col style={{ margin: "0 auto 1rem auto" }} span={24}>
+          <Button
+            block
+            type="primary"
+            onClick={() => {
+              updateUserFire(direccion, user);
+            }}
+          >
+            Guardar datos
+          </Button>
+        </Col>
+      </Row>
+      <Row gutter={24}>
         <Col span={24}>
           <Form.Item label="Las entregas son entre las 12:00 y las 14:00 horas">
             <Select
               placeholder="Dia de entrega"
               onChange={(e) => setDeliveryDay(e)}
-              value={deliveryDay}
+              defaultValue={deliveryDay}
               required
             >
               <Option value="lunes">Lunes</Option>
@@ -172,15 +184,24 @@ function BuyAddressForm() {
         </Col>
       </Row>
       <Row gutter={24}>
-        <Col style={{ margin: "1rem auto" }} span={15}>
-          <Checkbox checked={save} onChange={saveAddressData}>
-            Guardar datos{" "}
-          </Checkbox>
+        {" "}
+        <Col span={24}>
+          <Form.Item label="Seleccione Metodo de pago">
+            <Select
+              placeholder="Metodo de Pago"
+              onChange={(e) => setMercadoPago(e)}
+              value={mercadoPago}
+              required
+            >
+              <Option value={true}>MercadoPago</Option>
+              <Option value={false}>Efectivo</Option>
+            </Select>
+          </Form.Item>
         </Col>
       </Row>
       <Form.Item>
         <div className="address-form__btn-comprar">
-          <Button type="primary" htmlType="submit" disabled={loading}>
+          <Button block type="primary" htmlType="submit" disabled={loading}>
             {loading ? <Spin /> : "Comprar"}
           </Button>
         </div>

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Menu } from "antd";
 import { Link } from "react-router-dom";
 
-import logo from "assets/img/logo.jfif";
-
 import CartIcon from "components/Web/CartIcon";
 import "components/Web/MenuTop/MenuTop.scss";
 import useAuth from "hooks/useAuth";

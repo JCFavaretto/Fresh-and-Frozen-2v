@@ -1,0 +1,21 @@
+@import "scss";
+
+.mp-landing {
+  width: 85%;
+  background-color: $background-light;
+  margin: 0 auto;
+  margin-top: 2rem;
+  color: $primary-color;
+  padding: 0.8rem 2rem;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+  min-height: 70vh;
+
+  &__titulo {
+    color: $primary-color-hover;
+    font-size: 1.4rem;
+    border-bottom: 1px solid $background-secondary;
+    text-align: center;
+  }
+}

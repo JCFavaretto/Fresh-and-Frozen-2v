@@ -20,6 +20,7 @@ import User from "pages/Web/User";
 import Buy from "pages/Web/Buy";
 import Orders from "pages/Web/Orders";
 import Blog from "pages/Web/Blog";
+import MPCompra from "pages/Web/MPCompra";
 
 const routes = [
   {
@@ -105,6 +106,11 @@ const routes = [
       {
         path: "/comprar",
         component: Buy,
+        exact: true,
+      },
+      {
+        path: "/compra/:payment_id/:status",
+        component: MPCompra,
         exact: true,
       },
       {
