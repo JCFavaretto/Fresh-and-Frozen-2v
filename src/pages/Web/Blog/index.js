@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Col, Row } from "antd";
+import { Col, Row, Spin } from "antd";
 
 import BlogList from "components/Web/BlogList";
 import { getPostsFire } from "Fire/blog";
@@ -12,9 +12,10 @@ function Blog() {
   const { id } = useParams();
   const [posts, setPosts] = useState(null);
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPostsFire(setPosts);
+    getPostsFire(setPosts, setLoading);
   }, []);
 
   useEffect(() => {
@@ -32,13 +33,22 @@ function Blog() {
       <Col xs={1} sm={2} lg={4}></Col>
       <Col xs={22} sm={20} lg={16}>
         <div className="blog">
-          {id ? (
-            <h3 className="blog__titulo"> {post && post.title} </h3>
+          {loading ? (
+            <>
+              <h3 className="blog__titulo"> Cargando.. </h3>
+              <Spin style={{ display: "block", margin: "0 auto" }} />
+            </>
           ) : (
-            <h3 className="blog__titulo"> Blog </h3>
-          )}
+            <>
+              {id ? (
+                <h3 className="blog__titulo"> {post && post.title} </h3>
+              ) : (
+                <h3 className="blog__titulo"> Blog </h3>
+              )}
 
-          {id ? <PostInfo post={post} /> : <BlogList posts={posts} />}
+              {id ? <PostInfo post={post} /> : <BlogList posts={posts} />}
+            </>
+          )}
         </div>
       </Col>
       <Col xs={1} sm={2} lg={4}></Col>

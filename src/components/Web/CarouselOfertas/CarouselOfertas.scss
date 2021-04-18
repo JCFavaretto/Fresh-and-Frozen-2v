@@ -2,17 +2,13 @@
 
 .carousel {
   margin: 1rem auto 0 auto;
-  max-width: 95vw;
+  width: 95vw;
 
-  @media (min-width: 1200px) {
-    max-width: 90vw;
-  }
-
-  background-color: $background-light;
+  background-color: rgba(0, 0, 0, 0.2);
 
   &__titulo {
-    color: $primary-color-hover;
-    font-size: 2rem;
+    color: $font-light;
+    font-size: 1.8rem;
     border-bottom: 2px solid $background-secondary;
     text-align: center;
     padding: 0.5rem 1rem;
@@ -21,6 +17,5 @@
   &__actual-carousel {
     margin: 0 1rem;
     min-height: 280px;
-    background-color: $background-grey-light;
   }
 }

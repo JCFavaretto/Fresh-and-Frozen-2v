@@ -29,6 +29,39 @@
       }
     }
 
+    &-img-upload {
+      margin-top: 1rem;
+
+      img {
+        margin: 1rem auto;
+      }
+
+      .image-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @media (max-width: 650px) {
+          flex-direction: column;
+        }
+
+        &__btn-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin-left: 1rem;
+          @media (max-width: 650px) {
+          }
+
+          button {
+            margin: 0.5rem auto;
+            width: 150px;
+          }
+        }
+      }
+    }
+
     .tox-tinymce {
       margin: 2rem auto;
       width: 90%;

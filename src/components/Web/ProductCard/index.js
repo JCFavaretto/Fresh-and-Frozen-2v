@@ -20,6 +20,7 @@ function ProductCard({
 
   return (
     <Col
+      sm={12}
       md={10}
       xl={8}
       style={{

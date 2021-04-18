@@ -1,7 +1,7 @@
 import React from "react";
 import { List } from "antd";
-import moment from "moment";
-import { Link } from "react-router-dom";
+
+import PostCard from "components/Web/PostCard";
 
 import "components/Web/BlogList/BlogList.scss";
 
@@ -12,21 +12,20 @@ function BlogList({ posts }) {
 
   return (
     <div className="posts-list-web">
-      <List dataSource={posts} renderItem={(post) => <Post post={post} />} />
+      <List
+        grid={{
+          gutter: 16,
+          xs: 1,
+          sm: 1,
+          md: 2,
+          lg: 2,
+          xl: 2,
+        }}
+        dataSource={posts}
+        renderItem={(post) => <PostCard post={post} />}
+      />
     </div>
   );
 }
 
 export default BlogList;
-
-function Post({ post }) {
-  const date = moment(post.date).format("DD/MM/YYYY");
-
-  return (
-    <List.Item className="post">
-      {" "}
-      <span className="post_date">{date} </span>
-      <Link to={`/blog/${post.id}`}>{post.title}</Link>
-    </List.Item>
-  );
-}

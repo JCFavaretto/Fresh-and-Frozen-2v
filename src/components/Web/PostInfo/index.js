@@ -11,6 +11,12 @@ function PostInfo({ post }) {
 
   return (
     <div className="post-info">
+      <img
+        src={post.img}
+        alt={post.title}
+        width="300"
+        style={{ margin: "0 auto", display: "block" }}
+      />
       <div
         className="post-info__description"
         dangerouslySetInnerHTML={{ __html: post.description }}
