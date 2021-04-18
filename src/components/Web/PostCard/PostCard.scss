@@ -2,14 +2,16 @@
 
 .post {
   background-color: $background-grey-light;
+  max-width: 600px;
+  display: block;
+  margin: 0 auto;
+  position: relative;
 
   &__img {
-    position: relative;
     img {
-      width: 95%;
+      width: 100%;
       margin: 0 auto;
       display: block;
-      position: relative;
     }
   }
 
@@ -17,16 +19,19 @@
     opacity: 0.9;
     position: absolute;
     background-color: $background-primary;
-    width: 96%;
+    width: 100%;
     height: 20%;
     bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 600px;
 
     &-title {
       text-align: center;
       color: $font-light;
       font-size: 1.1rem;
       margin: 0;
-      height: 50%;
+      height: 70%;
     }
     &-date {
       color: $font-dark-light;
@@ -34,8 +39,8 @@
       text-align: right;
       display: flex;
       justify-content: flex-end;
-
-      height: 50%;
+      align-items: flex-end;
+      height: 30%;
     }
   }
   &:hover {

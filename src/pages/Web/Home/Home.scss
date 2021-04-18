@@ -39,6 +39,20 @@
     }
   }
 
+  &__banner-blog {
+    margin: 1rem auto 0 auto;
+    width: 85vw;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    &-titulo {
+      color: $font-light;
+      font-size: 1.8rem;
+      border-bottom: 2px solid $background-secondary;
+      text-align: center;
+      padding: 0.5rem 1rem;
+    }
+  }
+
   &__mini-banner {
     height: 25vh;
     background-color: $background-primary-dark;

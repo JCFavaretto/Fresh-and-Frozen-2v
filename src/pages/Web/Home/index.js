@@ -11,13 +11,18 @@ import {
   ShoppingOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Spin, List } from "antd";
+import { getLastPost } from "Fire/blog";
+import PostCard from "components/Web/PostCard";
 
 function Home() {
   const [productos, setProductos] = useState([]);
+  const [post, setPost] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getOnSaleProductsFire(setProductos);
+    getLastPost(setPost, setLoading);
   }, []);
 
   return (
@@ -53,7 +58,19 @@ function Home() {
         </div>
       </div>
 
-      <div className="home__banner-blog"></div>
+      <div className="home__banner-blog">
+        <h3 className="home__banner-blog-titulo">Mira nuestro blog :D</h3>
+        {loading ? (
+          <Spin style={{ margin: "0 auto" }} />
+        ) : (
+          post && (
+            <List
+              dataSource={post}
+              renderItem={(post) => <PostCard post={post} />}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 }

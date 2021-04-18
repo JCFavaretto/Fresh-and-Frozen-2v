@@ -76,6 +76,27 @@ export function deletePostFire(id, setReload) {
     });
 }
 
+export function getLastPost(setPost, setLoading) {
+  db.collection("blog")
+    .orderBy("date", "desc")
+    .limit(1)
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
+    })
+    .then((res) => {
+      setPost(res);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Hubó un problema con la base de datos. Intenté mas tarde.");
+      setLoading(false);
+    });
+}
+
 export function updatePostFire(
   post,
   img,
