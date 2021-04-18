@@ -12,12 +12,9 @@
       padding: 0;
 
       img {
-        width: 350px;
+        width: 65%;
         object-fit: contain;
-
-        @media (min-width: 680px) {
-          width: 450px;
-        }
+        max-width: 500px;
       }
     }
   }
@@ -54,23 +51,22 @@
   }
 
   &__mini-banner {
-    height: 25vh;
     background-color: $background-primary-dark;
     -webkit-box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.75);
     font-family: "Bebas Neue", cursive;
-
-    @media (min-width: 992px) {
-      height: 30vh;
-    }
+    padding: 2rem;
 
     &-icon {
       font-size: 2.3rem;
       margin: 0 auto;
-      padding-top: 2rem;
       display: block;
       color: $background-secondary-dark;
+
+      @media (min-width: 1200px) {
+        font-size: 3rem;
+      }
     }
 
     &-texto {
@@ -85,6 +81,10 @@
         font-size: 1.4rem;
       }
 
+      @media (min-width: 1200px) {
+        font-size: 1.6rem;
+      }
+
       p {
         margin: 0 auto;
       }
@@ -95,6 +95,8 @@
       margin: 2rem auto;
       height: 25vh;
       background-color: $background-secondary;
+
+      padding: 2rem;
       -webkit-box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.75);
       -moz-box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.75);
       box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.75);
@@ -105,9 +107,11 @@
       &-icon {
         font-size: 2.3rem;
         margin: 0 auto;
-        padding-top: 2rem;
         display: block;
         color: $primary-color-hover;
+        @media (min-width: 1200px) {
+          font-size: 3rem;
+        }
       }
     }
   }
