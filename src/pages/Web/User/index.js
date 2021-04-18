@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Row, Spin } from "antd";
+import { Helmet } from "react-helmet";
 
 import useAuth from "hooks/useAuth";
 import UserForm from "components/Web/UserForm";
@@ -10,16 +11,22 @@ function User() {
   const { user } = useAuth();
 
   return (
-    <Row style={{ minHeight: "82vh" }}>
-      <Col xs={1} sm={2} lg={4}></Col>
-      <Col xs={22} sm={20} lg={16}>
-        <div className="usuario">
-          <h3 className="usuario__titulo">Mis Datos</h3>
-          {user ? <UserForm user={user} /> : <Spin />}
-        </div>
-      </Col>
-      <Col xs={1} sm={2} lg={4}></Col>
-    </Row>
+    <>
+      <Helmet>
+        <title>{user.name} | Mis Datos | Pescaderia Fresh&Frozen</title>
+        <meta name="description" content="Usuarios Fresh&Frozen Pescaderia" />
+      </Helmet>
+      <Row style={{ minHeight: "82vh" }}>
+        <Col xs={1} sm={2} lg={4}></Col>
+        <Col xs={22} sm={20} lg={16}>
+          <div className="usuario">
+            <h3 className="usuario__titulo">Mis Datos</h3>
+            {user ? <UserForm user={user} /> : <Spin />}
+          </div>
+        </Col>
+        <Col xs={1} sm={2} lg={4}></Col>
+      </Row>
+    </>
   );
 }
 

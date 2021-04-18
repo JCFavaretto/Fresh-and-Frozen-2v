@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 
 import {
   getProductsFire,
@@ -27,20 +28,32 @@ function Products() {
   }, [categoria]); //eslint-disable-line
 
   return (
-    <div className="pagina-productos">
-      <h1 className="pagina-productos__titulo">
-        {!categoria
-          ? "Nuestros Productos"
-          : categoria === "promociones"
-          ? "Promociones"
-          : categoria === "frescos"
-          ? "Frescos"
-          : categoria === "congelados"
-          ? "Congelados"
-          : "Rebozados"}
-      </h1>
-      <ProductList productos={productos} />
-    </div>
+    <>
+      <Helmet>
+        <title>
+          {!categoria
+            ? "Productos | Pescaderia Fresh&Frozen"
+            : `${
+                categoria.charAt(0).toUpperCase() + categoria.slice(1)
+              } | Pescaderia Fresh&Frozen`}
+        </title>
+        <meta name="description" content="Productos Fresh&Frozen Pescaderia" />
+      </Helmet>
+      <div className="pagina-productos">
+        <h1 className="pagina-productos__titulo">
+          {!categoria
+            ? "Nuestros Productos"
+            : categoria === "promociones"
+            ? "Promociones"
+            : categoria === "frescos"
+            ? "Frescos"
+            : categoria === "congelados"
+            ? "Congelados"
+            : "Rebozados"}
+        </h1>
+        <ProductList productos={productos} />
+      </div>
+    </>
   );
 }
 

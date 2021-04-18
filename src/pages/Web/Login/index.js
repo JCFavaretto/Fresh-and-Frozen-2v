@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { Tabs, Col, Row } from "antd";
+import { Helmet } from "react-helmet";
 
 import RegisterForm from "components/RegisterForm";
 import LoginForm from "components/LoginForm";
@@ -18,20 +19,29 @@ function Login() {
   }
 
   return (
-    <Row style={{ minHeight: "82vh" }}>
-      <Col xs={1} sm={2} lg={4}></Col>
-      <Col xs={22} sm={20} lg={16}>
-        <Tabs type="card" className="login-tabs">
-          <TabPane tab={<span>Entrar</span>} key="1">
-            <LoginForm />
-          </TabPane>
-          <TabPane tab={<span>Registrarse</span>} key="2">
-            <RegisterForm />
-          </TabPane>
-        </Tabs>
-      </Col>
-      <Col xs={1} sm={2} lg={4}></Col>
-    </Row>
+    <>
+      <Helmet>
+        <title>Ingresar | Pescaderia Fresh&Frozen</title>
+        <meta
+          name="description"
+          content="Login Register Fresh&Frozen Pescaderia"
+        />
+      </Helmet>
+      <Row style={{ minHeight: "82vh" }}>
+        <Col xs={1} sm={2} lg={4}></Col>
+        <Col xs={22} sm={20} lg={16}>
+          <Tabs type="card" className="login-tabs">
+            <TabPane tab={<span>Entrar</span>} key="1">
+              <LoginForm />
+            </TabPane>
+            <TabPane tab={<span>Registrarse</span>} key="2">
+              <RegisterForm />
+            </TabPane>
+          </Tabs>
+        </Col>
+        <Col xs={1} sm={2} lg={4}></Col>
+      </Row>
+    </>
   );
 }
 
