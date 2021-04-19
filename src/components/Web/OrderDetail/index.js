@@ -93,7 +93,7 @@ function OrderDetail({ order, setReloadOrders }) {
         updateMPStatus(order, order.paymentId, setReloadOrders);
       }
     }
-  }, [order]);
+  }, [order]); //eslint-disable-line
 
   return (
     <div className="order-detail">
