@@ -70,7 +70,7 @@ function Home() {
         <div className="home__banner-blog">
           <h3 className="home__banner-blog-titulo">Mira nuestro blog :D</h3>
           {loading ? (
-            <Spin style={{ margin: "0 auto" }} />
+            <Spin style={{ margin: "0 auto", display: "block" }} />
           ) : (
             post && (
               <List

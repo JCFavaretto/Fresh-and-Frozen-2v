@@ -16,7 +16,12 @@ export async function setBuyOrderFire(
       .set(order)
       .then(() => {
         if (order.mercadoPago) {
-          comprarMercadopago(order.cart, order.comprador);
+          comprarMercadopago(
+            order.cart,
+            order.comprador,
+            setCart,
+            emptyStorage
+          );
         } else {
           setCart([]);
           emptyStorage();
@@ -83,7 +88,7 @@ async function updateStock(items) {
   return everythingIsOK;
 }
 
-async function comprarMercadopago(cart, id) {
+async function comprarMercadopago(cart, id, setCart, emptyStorage) {
   const items = cart.map((item) => {
     return {
       title: item.nombre,
@@ -104,6 +109,8 @@ async function comprarMercadopago(cart, id) {
       });
     })
     .then((res) => {
+      setCart([]);
+      emptyStorage();
       checkOutMercadoPago(items, res[0].id);
     });
 }
@@ -149,13 +156,36 @@ export function getLastOrder(id, setOrder) {
     });
 }
 
-export function updateMPStatus(order, payment_id, status) {
-  db.collection("orders")
-    .doc(order.id)
-    .set({ ...order, payment_id, paymentStatus: status })
+export function updateMPStatus(order, payment_id, setReloadOrders) {
+  const url = `https://api.mercadopago.com/v1/payments/${payment_id}`;
+  const auth = "Bearer " + process.env.REACT_APP_ACCESS_TOKEN;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: auth,
+    },
+  };
+
+  fetch(url, params)
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      if (data.status === "approved") {
+        db.collection("orders")
+          .doc(order.id)
+          .update({ paymentStatus: "Acreditado" })
+          .then(() => {
+            setReloadOrders(true);
+          });
+      } else if (data.status === "rejected" || data.status === "cancelled") {
+        cancelOrder(order, setReloadOrders, true);
+      }
+    })
     .catch((err) => {
       console.log(err);
-      toast.error("Error en la base de datos. Intente mas tarde.");
+      toast.error("Hubó un error buscando el pago. Intenté mas tarde.");
     });
 }
 
@@ -305,15 +335,17 @@ async function returnStock(items) {
   batch.commit();
 }
 
-export async function cancelOrder(order, setReloadOrders) {
+export async function cancelOrder(order, setReloadOrders, usoExterno) {
   await returnStock(order.cart);
 
   db.collection("orders")
     .doc(order.id)
     .set({ ...order, cancelada: true, onTheWay: false, entregado: false })
     .then(() => {
-      toast.success("Orden cancelada.");
       setReloadOrders(true);
+      if (!usoExterno) {
+        toast.success("Orden cancelada.");
+      }
     })
     .catch((err) => {
       console.log(err);
