@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import google from "assets/img/google.svg";
@@ -50,7 +50,7 @@ function LoginForm({ location }) {
           value={inputs.email}
         />
       </Form.Item>
-      <Form.Item>
+      <Form.Item style={{ marginBottom: "1rem" }}>
         <Input
           prefix={<LockOutlined style={{ color: "rgba(0,0,0, 0.25)" }} />}
           type="password"
@@ -60,6 +60,12 @@ function LoginForm({ location }) {
           value={inputs.password}
         />
       </Form.Item>
+      <Link
+        style={{ textAlign: "right", display: "block" }}
+        to="/reset-password"
+      >
+        Olvidaste tu contraseña?
+      </Link>
 
       <Form.Item>
         <Button

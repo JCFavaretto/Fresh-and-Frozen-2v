@@ -89,35 +89,41 @@ export function changeUserStatusFire(status, user, setReloadUsers) {
     });
 }
 
-export function updateUserFire(
+export async function updateUserFire(
   data,
   user,
   setEdit,
   setReloadUsers,
   setLoading
 ) {
-  db.collection("users")
-    .doc(user.uid)
-    .set({
-      ...user,
-      ...data,
-    })
-    .then(() => {
-      toast.success("Usuario actualizado.");
-      if (setEdit && setReloadUsers) {
-        setEdit(false);
-        setReloadUsers(true);
-      }
-      if (setLoading) {
-        setLoading(false);
-      }
-    })
-    .catch((err) => {
-      toast.error("El usuario no se actualizo correctamente.");
-      if (setLoading) {
-        setLoading(false);
-      }
-    });
+  try {
+    if (data.password) {
+      await auth.currentUser.updatePassword(data.password);
+      delete data.password;
+    }
+    if (user.email !== data.email) {
+      await auth.currentUser.updateEmail(data.email);
+    }
+    await db
+      .collection("users")
+      .doc(user.uid)
+      .set({ ...user, ...data });
+
+    toast.success("Usuario actualizado.");
+    if (setEdit && setReloadUsers) {
+      setEdit(false);
+      setReloadUsers(true);
+    }
+    if (setLoading) {
+      setLoading(false);
+    }
+  } catch (err) {
+    console.log(err);
+    toast.error("El usuario no se actualizo correctamente.");
+    if (setLoading) {
+      setLoading(false);
+    }
+  }
 }
 
 export function googleSignIn() {
@@ -136,4 +142,14 @@ export function googleSignIn() {
     .catch((err) => {
       console.log(err);
     });
+}
+
+export async function resetUserPass(email) {
+  try {
+    auth.sendPasswordResetEmail(email);
+    window.location.href = "/login";
+  } catch (err) {
+    console.log(err);
+    toast.error(err.message);
+  }
 }

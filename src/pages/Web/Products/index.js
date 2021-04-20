@@ -9,7 +9,6 @@ import {
 import ProductList from "components/Web/ProductList";
 
 import "pages/Web/Products/Products.scss";
-import { Col, Row } from "antd";
 import { useParams } from "react-router-dom";
 
 function Products() {

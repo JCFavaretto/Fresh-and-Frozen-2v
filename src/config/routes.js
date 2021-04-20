@@ -20,6 +20,7 @@ import User from "pages/Web/User";
 import Buy from "pages/Web/Buy";
 import Orders from "pages/Web/Orders";
 import Blog from "pages/Web/Blog";
+import Reset from "pages/Web/ResetPass";
 
 const routes = [
   {
@@ -115,6 +116,11 @@ const routes = [
       {
         path: "/blog/:id",
         component: Blog,
+        exact: true,
+      },
+      {
+        path: "/reset-password",
+        component: Reset,
         exact: true,
       },
       {

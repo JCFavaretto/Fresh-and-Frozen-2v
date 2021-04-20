@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Input, Row, Form, Spin } from "antd";
-import { MailOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 
 import { toast } from "react-toastify";
 
@@ -14,20 +14,20 @@ function UserForm({ user }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     let updateUser = userData;
-    if (updateUser.password || updateUser.repeatPassword) {
-      if (updateUser.password !== updateUser.repeatPassword) {
+    if (updateUser.password || updateUser.repeat) {
+      if (updateUser.password !== updateUser.repeat) {
         toast.error("Las contraseñas no coinciden");
         return;
       } else {
-        delete updateUser.repeatPassword;
+        delete updateUser.repeat;
       }
     }
     if (!updateUser.name || !updateUser.lastName || !updateUser.email) {
       toast.error("El nombre, apellido e email son obligatorios ");
       return;
     }
+
     setLoading(true);
     updateUserFire(updateUser, user, null, null, setLoading);
   }
@@ -37,6 +37,8 @@ function UserForm({ user }) {
       name: user.name,
       lastName: user.lastName,
       email: user.email,
+      password: "",
+      repeat: "",
     });
   }, [user]);
 
@@ -93,6 +95,37 @@ function DaForm({ userData, setUserData, updateUser, loading }) {
               value={userData.email}
               onChange={(e) =>
                 setUserData({ ...userData, email: e.target.value })
+              }
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Row gutter={24}>
+        <Col span={24}>
+          <Form.Item>
+            <Input
+              type="password"
+              prefix={<LockOutlined style={{ color: "rgba(0, 0, 0, 0.25)" }} />}
+              placeholder="Nueva Contraseña"
+              value={userData.password}
+              onChange={(e) =>
+                setUserData({ ...userData, password: e.target.value })
+              }
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Form.Item>
+            <Input
+              type="password"
+              prefix={<LockOutlined style={{ color: "rgba(0, 0, 0, 0.25)" }} />}
+              placeholder="Repita la contraseña"
+              value={userData.repeat}
+              onChange={(e) =>
+                setUserData({ ...userData, repeat: e.target.value })
               }
             />
           </Form.Item>
